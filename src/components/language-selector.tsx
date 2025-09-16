@@ -28,7 +28,12 @@ export function LanguageSelector() {
         <Button 
           variant="outline" 
           size="sm"
-          className="border-0 shadow-[0_4px_12px_-2px_hsl(210_85%_35%/0.1)]"
+           className="
+    border-0 
+    text-black dark:text-white 
+    bg-white dark:bg-gray-900
+    shadow-[0_4px_12px_-2px_hsl(210_85%_35%/0.1)]
+  "
         >
           <Languages className="h-4 w-4 mr-2" />
           {currentLang?.native}
