@@ -1,14 +1,14 @@
 # backend/services/forecast.py
 import numpy as np
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model # type: ignore
 import joblib
 import pandas as pd
-from services.classify import classify_level, trend_alert
+from backend.services.classify import classify_level, trend_alert
 
 # === Paths ===
-MODEL_PATH = "models/groundwater_lstm.keras"   # use .keras not .h5
-SCALER_PATH = "models/scaler.gz"
-DATA_PATH = "data/clean_groundwater_daily.csv"
+MODEL_PATH = "backend/models/groundwater_lstm.keras"   # use .keras not .h5
+SCALER_PATH = "backend/models/scaler.gz"
+DATA_PATH = "backend/data/clean_groundwater_daily.csv"
 
 # === Load model + scaler once at import time ===
 try:

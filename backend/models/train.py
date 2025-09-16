@@ -8,9 +8,9 @@ import joblib
 import os
 
 # === Paths ===
-DATA_PATH = "data/clean_groundwater_daily.csv"
-MODEL_PATH = "models/groundwater_lstm.keras"
-SCALER_PATH = "models/scaler.gz"
+DATA_PATH = "backend/data/clean_groundwater_daily.csv"
+MODEL_PATH = "backend/models/groundwater_lstm.keras"
+SCALER_PATH = "backend/models/scaler.gz"
 
 os.makedirs("models", exist_ok=True)
 
