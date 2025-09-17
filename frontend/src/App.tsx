@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import ForecastViewer from "./components/ForecastViewer";
+import HistoryViewer from "./components/HistoryViewer";
 // import Header from "@/components/header";
 
 const queryClient = new QueryClient();
@@ -24,7 +26,10 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+             
+                <Route path="/forecast" element={<ForecastViewer />} />
+                <Route path="/history" element={<HistoryViewer />} />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
