@@ -56,25 +56,7 @@ export default function HistoryViewer() {
         <div>Loading history…</div>
       )}
 
-      {/* Table */}
-      {data.length > 0 && (
-        <table className="mt-6 border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="px-3 py-1 border">Date</th>
-              <th className="px-3 py-1 border">Water Level (m)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((d, i) => (
-              <tr key={i}>
-                <td className="px-3 py-1 border">{d.date}</td>
-                <td className="px-3 py-1 border">{d.water_level.toFixed(2)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      
     </div>
   );
 }

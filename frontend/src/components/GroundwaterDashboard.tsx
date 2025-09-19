@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/components/theme-provider"; // ✅ import theme context
 import Header from "@/components/ui/header";
+import HistoryViewer from "@/components/HistoryViewer";
+import ForecastViewer from "@/components/ForecastViewer";
+
 // import { AIAssistant } from "@/components/ai-assistant/AIAssistant";
 
 const mockWaterLevelData = [
@@ -328,67 +331,19 @@ export default function GroundwaterDashboard() {
       <div className="grid lg:grid-cols-2 gap-6">
         <Card className="border-0 shadow-[0_4px_12px_-2px_hsl(210_85%_35%/0.1)]">
           <CardHeader>
-            <CardTitle className="text-lg font-semibold">Water Level Trends</CardTitle>
+            <CardTitle className="text-lg font-semibold">Historical Data</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={mockWaterLevelData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="date" fontSize={12} />
-                <YAxis fontSize={12} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: 'none',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 12px -2px hsl(210 85% 35% / 0.1)'
-                  }}
-                  labelStyle={{ color: tooltipText }}
-                  itemStyle={{ color: tooltipText }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="level"
-                  stroke={chartStroke}
-                  strokeWidth={2}
-                  dot={{ fill: chartStroke, strokeWidth: 2, r: 4 }}
-                />
-
-              </LineChart>
-            </ResponsiveContainer>
+            <HistoryViewer />
           </CardContent>
         </Card>
 
         <Card className="border-0 shadow-[0_4px_12px_-2px_hsl(210_85%_35%/0.1)]">
           <CardHeader>
-            <CardTitle className="text-lg font-semibold">Recharge Patterns</CardTitle>
+            <CardTitle className="text-lg font-semibold">Forecast Data</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={200}>
-              <AreaChart data={mockWaterLevelData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="date" fontSize={12} />
-                <YAxis fontSize={12} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: 'none',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 12px -2px hsl(210 85% 35% / 0.1)'
-                  }}
-                  labelStyle={{ color: tooltipText }}
-                  itemStyle={{ color: tooltipText }}
-                />
-
-                <Area
-                  type="monotone"
-                  dataKey="recharge"
-                  stroke={chartStroke}
-                  fill={chartFill}
-                  strokeWidth={2}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <ForecastViewer />
           </CardContent>
         </Card>
       </div>
