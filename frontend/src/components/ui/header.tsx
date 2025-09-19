@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { LanguageSelector } from "@/components/language-selector";
 import { ThemeToggle } from "@/components/theme-toggle";
-
+// import Districts from "@/districts/district"; 
 const Header = () => {
   const [isMapOpen, setIsMapOpen] = useState(false);
 
@@ -39,13 +39,13 @@ const Header = () => {
             {isMapOpen && (
               <div className="absolute left-0 mt-2 w-40 bg-white text-black dark:bg-gray-800 dark:text-white rounded shadow-lg">
                 <Link 
-                  to="/states" 
+                  to="/state" 
                   className="no-underline block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   States
                 </Link>
                 <Link 
-                  to="/Districts" 
+                  to="/district" 
                   className="no-underline block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Districts
