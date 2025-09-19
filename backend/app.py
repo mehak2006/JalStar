@@ -1,12 +1,12 @@
 print(">>> LOADING THIS APP.PY <<<")
-# python -m uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
+# run with: python -m uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
+from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException
-from backend.services.forecast import forecast_future
 from fastapi.middleware.cors import CORSMiddleware
+from backend.services.forecast import forecast_future
+from backend.services.db import get_station_data  # <-- new import
 
 app = FastAPI()
-
-
 
 # Allow frontend origin
 app.add_middleware(
@@ -25,26 +25,26 @@ def read_root():
 def health():
     return {"status": "ok"}
 
-@app.get("/forecast")
-def get_forecast(n_future: int = 7):
+@app.get("/forecast/{station_id}")
+def get_forecast(station_id: str, n_future: int = 7):
     try:
-        return forecast_future(n_future=n_future)
+        return forecast_future(station_id=station_id, n_future=n_future)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/history")
-def get_history(days: int = 7):
-    import pandas as pd
-    
-    df = pd.read_csv("backend/data/clean_groundwater_daily.csv", parse_dates=["Date"])
-    df = df.dropna(subset=["Water_Level"])  # just in case
 
-    # keep only last `days`
-    df_recent = df.tail(days)
 
-    records = [
-        {"date": row.Date.strftime("%Y-%m-%d"), "water_level": float(row.Water_Level)}
-        for row in df_recent.itertuples()
+@app.get("/history/{station_id}")
+def get_history(station_id: str, days: int = 7):
+    from backend.services.db import get_station_data
+
+    # Instead of filtering by datetime, just fetch N docs
+    docs = get_station_data(station_id, limit=days)
+    if not docs:
+        return {"station_id": station_id, "history": []}
+
+    history = [
+        {"date": str(d["ts"].date()), "water_level": float(d.get("gw_level_smoothed", d["gw_level"]))}
+        for d in docs
     ]
-
-    return {"days": days, "history": records}
+    return {"station_id": station_id, "count": len(history), "history": history}

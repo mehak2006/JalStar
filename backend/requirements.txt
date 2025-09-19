@@ -6,3 +6,5 @@ scikit-learn
 joblib
 tensorflow>=2.10
 h5py
+pymongo
+dnspython

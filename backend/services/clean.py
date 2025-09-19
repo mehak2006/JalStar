@@ -1,6 +1,7 @@
 import pandas as pd
+from services.db import db   # use your MongoDB connection wrapper (db = client[DB_NAME])
 
-def clean_raw_file(raw_file: str, out_dir: str = "data/"):
+def clean_raw_file_to_db(raw_file: str, station_id: str):
     # Step 1: Find the header row index
     with open(raw_file, 'r', encoding='utf-8') as f:
         lines = f.readlines()
@@ -28,17 +29,22 @@ def clean_raw_file(raw_file: str, out_dir: str = "data/"):
     # Step 5: Drop rows without valid dates
     df = df.dropna(subset=['Date'])
 
-    # Step 6: Save clean 6-hourly data
-    hourly_path = out_dir + "clean_groundwater.csv"
-    df.to_csv(hourly_path, index=False)
+    # Step 6: Insert into MongoDB (readings collection)
+    docs = []
+    for _, row in df.iterrows():
+        docs.append({
+            "ts": row['Date'].to_pydatetime(),
+            "meta": {"station_id": station_id},
+            "raw": {"gw_level": float(row['Water_Level'])},
+            "processed": {"gw_level_smoothed": float(row['Water_Level'])}  # you can preprocess later
+        })
 
-    # Step 7: Save daily averages
-    daily_path = out_dir + "clean_groundwater_daily.csv"
-    df_daily = df.set_index('Date').resample('D').mean().reset_index()
-    df_daily.to_csv(daily_path, index=False)
+    if docs:
+        db.readings.insert_many(docs)
+        print(f"✅ Inserted {len(docs)} records into MongoDB for station {station_id}")
 
-    return hourly_path, daily_path
+    return len(docs)
 
 if __name__ == "__main__":
-    hourly, daily = clean_raw_file("data/hauz_khas_dwlr.csv", out_dir="data/")
-    print("Files created:", hourly, daily)
+    n = clean_raw_file_to_db("data/hauz_khas_dwlr.csv", station_id="DWLR_01")
+    print("Inserted:", n)
