@@ -10,6 +10,7 @@ const Header = () => {
         <header className="bg-white dark:bg-black text-black dark:text-white  shadow-md fixed w-full z-10 transition-colors">
       <div className="w-full flex justify-between items-center px-6 py-3">
         {/* Logo / Title */}
+        {/* <img src="/favicon.ico" alt="icon" /> */}
         <h1 className="text-xl font-bold">JalSthar</h1>
 
         {/* Navigation */}
