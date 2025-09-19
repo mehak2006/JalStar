@@ -1,14 +1,14 @@
 # backend/services/forecast.py
 import numpy as np
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model # type: ignore
 import joblib
 import pandas as pd
-from services.classify import classify_level, trend_alert
+from backend.services.classify import classify_level, trend_alert
 
 # === Paths ===
-MODEL_PATH = "models/groundwater_lstm.keras"   # use .keras not .h5
-SCALER_PATH = "models/scaler.gz"
-DATA_PATH = "data/clean_groundwater_daily.csv"
+MODEL_PATH = "backend/models/groundwater_lstm.keras"   # use .keras not .h5
+SCALER_PATH = "backend/models/scaler.gz"
+DATA_PATH = "backend/data/clean_groundwater_daily.csv"
 
 # === Load model + scaler once at import time ===
 try:
@@ -50,11 +50,12 @@ def forecast_future(n_future: int = 7, lookback: int = 15):
         pred_scaled = pred_scaled.reshape(1, 1, 1)  # still scaled
         last_seq = np.append(last_seq[:, 1:, :], pred_scaled, axis=1)
 
-    categories = [classify_level(val) for val in future_preds]
+    mean_val = sum(future_preds) / len(future_preds)
+    mean_category = classify_level(mean_val)
     trend = trend_alert(future_preds)
 
     return {
         "predictions": future_preds,
-        "categories": categories,
+        "mean_category": mean_category,
         "trend": trend
     }
