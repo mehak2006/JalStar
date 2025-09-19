@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { Droplets, TrendingUp, TrendingDown, AlertTriangle, MapPin, Search, Filter, Navigation, Clock, Satellite } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { ThemeToggle } from "@/components/theme-toggle";
-import { LanguageSelector } from "@/components/language-selector";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/components/theme-provider"; // ✅ import theme context
+import Header from "@/components/ui/header";
 // import { AIAssistant } from "@/components/ai-assistant/AIAssistant";
 
 const mockWaterLevelData = [
@@ -28,7 +28,7 @@ const mockStations = [
 ];
 
 const mockNearbyStations = [
-  { id: 'DWLR005', location: 'Your Area - Local Station', level: 18.7, status: 'normal', trend: 'up' as const, distance: 0.8 },
+  { id: 'DWLR005', location: 'Haryana-Kurukshetra', level: 18.7, status: 'normal', trend: 'up' as const, distance: 0.8 },
   { id: 'DWLR001', location: 'Gujarat - Ahmedabad', level: 15.2, status: 'normal', trend: 'up' as const, distance: 2.5 },
   { id: 'DWLR002', location: 'Maharashtra - Pune', level: 8.4, status: 'low', trend: 'down' as const, distance: 5.8 },
 ];
@@ -126,7 +126,12 @@ export default function GroundwaterDashboard() {
   const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
   const [locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'pending'>('pending');
   const [lastUpdate, setLastUpdate] = useState(new Date());
+  const { theme } = useTheme(); // ✅ detect current theme
 
+  // Pick colors based on theme
+  const chartStroke = theme === "dark" ? "#ffffff" : "#FFD700"; // white in dark, yellow in light
+  const chartFill   = theme === "dark" ? "rgba(255, 255, 255, 0.71)" : "rgba(253, 216, 6, 0.65)"; 
+  const tooltipText = theme === "dark" ? "#ffffff" : "#000000";
   useEffect(() => {
     // Auto-update timestamp every minute
     const interval = setInterval(() => {
@@ -154,20 +159,19 @@ export default function GroundwaterDashboard() {
   };
 
   return (
+    <>
+    <Header/>
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/50 p-4 space-y-6">
-      {/* Header */}
+      {/* <NavBar/>  */}
+      
       <div className="flex items-center justify-between">
         <div className="text-center flex-1 space-y-2">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent py-17">
             {t('groundwater_monitoring')}
           </h1>
           <p className="text-muted-foreground">
             {t('realtime_data')}
           </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <LanguageSelector />
-          <ThemeToggle />
         </div>
       </div>
 
@@ -279,7 +283,7 @@ export default function GroundwaterDashboard() {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input 
             placeholder={t('search_stations')}
-            className="pl-10 border-0 shadow-[0_4px_12px_-2px_hsl(210_85%_35%/0.1)]"
+            className=" px-5 pl-10 border-0 shadow-[0_4px_12px_-2px_hsl(210_85%_35%/0.1)]"
           />
         </div>
         <Button variant="outline" className="border-0 shadow-[0_4px_12px_-2px_hsl(210_85%_35%/0.1)]">
@@ -332,21 +336,24 @@ export default function GroundwaterDashboard() {
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="date" fontSize={12} />
                 <YAxis fontSize={12} />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{
                     backgroundColor: 'hsl(var(--card))',
                     border: 'none',
                     borderRadius: '8px',
                     boxShadow: '0 4px 12px -2px hsl(210 85% 35% / 0.1)'
                   }}
+                  labelStyle={{ color: tooltipText }}
+                  itemStyle={{ color: tooltipText }}
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="level" 
-                  stroke="hsl(var(--primary))" 
+                <Line
+                  type="monotone"
+                  dataKey="level"
+                  stroke={chartStroke}
                   strokeWidth={2}
-                  dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
+                  dot={{ fill: chartStroke, strokeWidth: 2, r: 4 }}
                 />
+
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -362,19 +369,22 @@ export default function GroundwaterDashboard() {
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="date" fontSize={12} />
                 <YAxis fontSize={12} />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{
                     backgroundColor: 'hsl(var(--card))',
                     border: 'none',
                     borderRadius: '8px',
                     boxShadow: '0 4px 12px -2px hsl(210 85% 35% / 0.1)'
                   }}
+                  labelStyle={{ color: tooltipText }}
+                  itemStyle={{ color: tooltipText }}
                 />
-                <Area 
-                  type="monotone" 
-                  dataKey="recharge" 
-                  stroke="hsl(var(--secondary))" 
-                  fill="hsl(var(--secondary) / 0.3)"
+
+                <Area
+                  type="monotone"
+                  dataKey="recharge"
+                  stroke={chartStroke}
+                  fill={chartFill}
                   strokeWidth={2}
                 />
               </AreaChart>
@@ -399,18 +409,28 @@ export default function GroundwaterDashboard() {
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-3 pt-4">
-        <Button className="flex-1">
+        <Button 
+          className={`flex-1 ${
+            theme === "dark" ? "bg-white text-black hover:bg-gray-200" : ""
+          }`}
+        >
           <MapPin className="h-4 w-4 mr-2" />
           View Station Map
         </Button>
-        <Button variant="secondary" className="flex-1">
+
+        <Button 
+          variant="secondary"
+          className={`flex-1 ${
+            theme === "dark" ? "bg-white text-black hover:bg-gray-200" : ""
+          }`}
+        >
           <TrendingUp className="h-4 w-4 mr-2" />
           Generate Report
         </Button>
       </div>
-
       {/* AI Assistant */}
       {/* <AIAssistant /> */}
     </div>
+    </>
   );
 }
