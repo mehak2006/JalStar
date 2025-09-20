@@ -1,59 +1,101 @@
 print(">>> LOADING THIS APP.PY <<<")
-# run with: python -m uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
-from datetime import datetime, timedelta
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from backend.services.forecast import forecast_future
-from backend.services.db import get_station_data  # <-- new import
-from backend.services.email_service import send_alert_email
-from typing import Optional
-# backend/app.py
+# run with: uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
+
 import os
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+
 from dotenv import load_dotenv
+
+# ensure we read backend/.env regardless of CWD
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path)
+print(f"🔐 Loaded env from: {dotenv_path}")
 from datetime import datetime, timezone
+from typing import Optional, List, Dict, Any
+
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+from pydantic import BaseModel
 
 from backend.db import init_db, get_session
 from backend.models.subscriber import Subscriber
 from backend.services import scheduler, notification
-from backend.services import scheduler
+from backend.services.forecast import forecast_future
+from backend.services.db import get_station_data
 
-load_dotenv()
+# ------------------ Pydantic models ------------------
 
-app = Flask(__name__)
-CORS(app)
+class SubscriberRequest(BaseModel):
+    name: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    preferredChannel: str = "both"
 
-# Initialize DB + tables
+class SubscribeResponse(BaseModel):
+    ok: bool
+    id: int
+    message: Optional[str] = None
+
+class SubscriberOut(BaseModel):
+    id: int
+    name: str
+    email: Optional[str]
+    phone: Optional[str]
+    preferred_channel: str
+    active: bool
+    last_alert_sent_at: Optional[str]
+
+# ------------------ Email import ------------------
+
+try:
+    from backend.services.email_service import send_alert_email
+except Exception as e:
+    print("⚠ Email service disabled due to error:", e)
+    def send_alert_email(*args, **kwargs):
+        print("⚠ Dummy email alert: skipped")
+
+# ------------------ Setup ------------------
+
+
 init_db()
 
 DEV_TRIGGER_TOKEN = os.getenv("DEV_TRIGGER_TOKEN", "dev-secret")
 
+app = FastAPI()
 
-@app.route("/api/health", methods=["GET"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ------------------ Health ------------------
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, world!"}
+
+@app.get("/health")
 def health():
-    return jsonify({"status": "ok", "time": datetime.now(timezone.utc).isoformat()})
+    return {"status": "ok", "time": datetime.now(timezone.utc).isoformat()}
 
+# ------------------ Subscription ------------------
 
-@app.route("/api/subscribe", methods=["POST"])
-def subscribe():
-    """
-    Subscribe a user to alerts.
-    JSON body: {name, email?, phone?, preferredChannel?}
-    """
-    data = request.get_json(force=True)
-    name = data.get("name")
-    email = data.get("email")
-    phone = data.get("phone")
-    preferred = data.get("preferredChannel", "both")
+@app.post("/api/subscribe", response_model=SubscribeResponse)
+def subscribe(data: SubscriberRequest):
+    name = data.name
+    email = data.email
+    phone = data.phone
+    preferred = data.preferredChannel
 
     if not name:
-        return jsonify({"ok": False, "error": "Name required"}), 400
+        raise HTTPException(status_code=400, detail="Name required")
     if not email and not phone:
-        return jsonify({"ok": False, "error": "Email or phone required"}), 400
+        raise HTTPException(status_code=400, detail="Email or phone required")
 
     with get_session() as session:
-        # Check if already subscribed
         existing = None
         if email:
             existing = session.query(Subscriber).filter_by(email=email).first()
@@ -64,7 +106,7 @@ def subscribe():
             existing.active = True
             existing.preferred_channel = preferred
             session.commit()
-            return jsonify({"ok": True, "id": existing.id, "message": "Updated existing subscriber"})
+            return {"ok": True, "id": existing.id, "message": "Updated existing subscriber"}
 
         sub = Subscriber(
             name=name,
@@ -74,37 +116,29 @@ def subscribe():
         )
         session.add(sub)
         session.commit()
-        return jsonify({"ok": True, "id": sub.id})
+        if email:
+            subject = "🎉 Welcome to Groundwater Alerts"
+            body = (
+                f"Hi {name},\n\n"
+                "You have successfully subscribed to Groundwater Depletion Alerts.\n"
+                "We’ll notify you whenever critical levels are detected.\n\n"
+                "Thank you for staying informed,\n"
+                "Team Bluemetrics"
+            )
+            try:
+                success, resp = send_alert_email(email, subject, body)
+                print(f"📧 Welcome email sent to {email}: {success}, {resp}")
+            except Exception as e:
+                print(f"⚠ Failed to send welcome email to {email}: {e}")
 
+        
+        return {"ok": True, "id": sub.id}
 
-@app.route("/api/trigger-test", methods=["GET"])
-def trigger_test():
-    """
-    Manually trigger a test alert.
-    Usage: GET /api/trigger-test?token=DEV_TRIGGER_TOKEN
-    """
-    token = request.args.get("token")
-    if token != DEV_TRIGGER_TOKEN:
-        return jsonify({"ok": False, "error": "Unauthorized"}), 403
-
-    now = datetime.now(timezone.utc)
-    summary = notification.notify_subscribers(
-        level="critical",
-        station_id="TEST_STATION",
-        reading_value=-42.0,
-        timestamp=now,
-    )
-    return jsonify({"ok": True, "summary": summary})
-
-
-@app.route("/api/subscribers", methods=["GET"])
+@app.get("/api/subscribers", response_model=List[SubscriberOut])
 def list_subscribers():
-    """
-    List subscribers (admin/debug only).
-    """
     with get_session() as session:
         subs = session.query(Subscriber).all()
-        result = [
+        return [
             {
                 "id": s.id,
                 "name": s.name,
@@ -116,34 +150,22 @@ def list_subscribers():
             }
             for s in subs
         ]
-        return jsonify(result)
 
+@app.get("/api/trigger-test")
+def trigger_test(token: str = Query(...)):
+    if token != DEV_TRIGGER_TOKEN:
+        raise HTTPException(status_code=403, detail="Unauthorized")
 
-if __name__ == "__main__":
-    # Start background scheduler
-    scheduler.start_scheduler()
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
+    now = datetime.now(timezone.utc)
+    summary = notification.notify_subscribers(
+        level="critical",
+        station_id="TEST_STATION",
+        reading_value=-42.0,
+        timestamp=now,
+    )
+    return {"ok": True, "summary": summary}
 
-app = FastAPI()
-
-
-
-# Allow frontend origin
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-@app.get("/")
-def read_root():
-    return {"message": "Hello, world!"}
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
+# ------------------ Forecast & Data ------------------
 
 @app.get("/forecast/{station_id}")
 def get_forecast(station_id: str, n_future: int = 7):
@@ -152,13 +174,8 @@ def get_forecast(station_id: str, n_future: int = 7):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-
 @app.get("/history/{station_id}")
 def get_history(station_id: str, days: int = 7):
-    from backend.services.db import get_station_data
-
-    # Instead of filtering by datetime, just fetch N docs
     docs = get_station_data(station_id, limit=days)
     if not docs:
         return {"station_id": station_id, "history": []}
@@ -189,3 +206,10 @@ def get_latest(station_id: str):
         "lon": doc.get("lon") or doc.get("meta", {}).get("lon"),
         "name": doc.get("name")
     }
+
+# ------------------ Startup ------------------
+
+@app.on_event("startup")
+def startup_event():
+    scheduler.start_scheduler()
+    print("✅ Scheduler started")

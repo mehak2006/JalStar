@@ -42,7 +42,7 @@ def notify_subscribers(level: str, station_id: str, reading_value: float, timest
                 if sub.preferred_channel in ("sms", "both") and sub.phone:
                     sms_success, sms_resp = sms_service.send_sms(sub.phone, sms_msg)
                 if sub.preferred_channel in ("email", "both") and sub.email:
-                    email_success, email_resp = email_service.send_email(
+                    email_success, email_resp = email_service.send_alert_email(
                         sub.email, email_subject, email_body
                     )
             except Exception as e:
