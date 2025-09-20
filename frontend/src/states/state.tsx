@@ -3,7 +3,7 @@ import "../css/bootstrap-custom.min.css";
 import "../css/base.css";
 import "../css/cinder.css";
 import "../css/highlight.css";
-import "../bower_components/leaflet/dist/leaflet.css";
+// import "../bower_components/leaflet/dist/leaflet.css";
 import Header from "@/components/ui/header";
 import React from "react";
 import DistrictMap from "@/js/mapsplot";
@@ -21,7 +21,7 @@ const States = () => {
       "/js/highlight.pack.js",
       "/js/base.js",
       "https://cdnjs.cloudflare.com/ajax/libs/d3/3.3.0/d3.min.js",
-      "/bower_components/leaflet/dist/leaflet.js",
+      // "/bower_components/leaflet/dist/leaflet.js",
       "/js/mapsplot.tsx",
     ];
 
