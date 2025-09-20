@@ -37,15 +37,15 @@ const AlertSubscription: React.FC = () => {
     setError(null);
 
     try {
-      const res = await axios.post("/api/subscribe", formData, {
+      const res = await axios.post("http://127.0.0.1:8000/api/subscribe", formData, {
         headers: { "Content-Type": "application/json" },
       });
       if (res.data.ok) {
         setMessage("✅ Subscription successful! You'll get alerts.");
         setFormData({
-          name: "Jyoti",
-          email: "jyotikumarisingh881@gmail.com",
-          phone: "7024887608",
+          name: "",
+          email: "",
+          phone: "",
           preferredChannel: "both",
         });
       } else {

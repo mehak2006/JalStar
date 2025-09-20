@@ -116,6 +116,22 @@ def subscribe(data: SubscriberRequest):
         )
         session.add(sub)
         session.commit()
+        if email:
+            subject = "🎉 Welcome to Groundwater Alerts"
+            body = (
+                f"Hi {name},\n\n"
+                "You have successfully subscribed to Groundwater Depletion Alerts.\n"
+                "We’ll notify you whenever critical levels are detected.\n\n"
+                "Thank you for staying informed,\n"
+                "Team Bluemetrics"
+            )
+            try:
+                success, resp = send_alert_email(email, subject, body)
+                print(f"📧 Welcome email sent to {email}: {success}, {resp}")
+            except Exception as e:
+                print(f"⚠ Failed to send welcome email to {email}: {e}")
+
+        
         return {"ok": True, "id": sub.id}
 
 @app.get("/api/subscribers", response_model=List[SubscriberOut])
