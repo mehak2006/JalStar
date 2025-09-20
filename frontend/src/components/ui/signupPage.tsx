@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -35,11 +36,20 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-6">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
-        <h2 className="mb-6 text-center text-2xl font-semibold text-slate-800">
-          Create Your Account ✨
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-500 via-pink-400 to-yellow-300 p-6 relative overflow-hidden">
+      {/* Animated floating blobs using Tailwind only */}
+      <div className="absolute -top-20 -left-20 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-bounce" />
+      <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" />
+
+      {/* Signup card */}
+      <div className="w-full max-w-md rounded-3xl bg-white/30 backdrop-blur-lg shadow-2xl p-8 border border-white/40 animate-fadeIn">
+        <h2 className="mb-2 text-center text-3xl font-bold text-slate-900">
+          🚀 Join the Adventure!
         </h2>
+        <p className="mb-6 text-center text-sm text-slate-600">
+          Let’s create your account and get started 🎉
+        </p>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
@@ -47,9 +57,13 @@ export default function SignupPage() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel>🌟 Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input
+                      placeholder="John Doe"
+                      className="rounded-xl border-2 focus:border-pink-500 transition"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -60,9 +74,13 @@ export default function SignupPage() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>📧 Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="you@example.com" {...field} />
+                    <Input
+                      placeholder="you@example.com"
+                      className="rounded-xl border-2 focus:border-yellow-500 transition"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -73,23 +91,35 @@ export default function SignupPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>🔒 Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="••••••••" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="••••••••"
+                      className="rounded-xl border-2 focus:border-purple-500 transition"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
-              Sign Up
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-2 px-4 rounded-xl shadow-lg hover:scale-105 transition-transform"
+            >
+              ✨ Sign Up
             </Button>
           </form>
         </Form>
-        <p className="mt-4 text-center text-sm text-muted-foreground">
+
+        <p className="mt-6 text-center text-sm text-slate-700">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Log in
+          <a
+            href="/login"
+            className="text-purple-600 font-semibold hover:underline"
+          >
+            Log in here 💫
           </a>
         </p>
       </div>
