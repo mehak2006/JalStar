@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -43,9 +44,9 @@ const AlertSubscription: React.FC = () => {
       if (res.data.ok) {
         setMessage("✅ Subscription successful! You'll get alerts.");
         setFormData({
-          name: "Jyoti",
-          email: "jyotikumarisingh881@gmail.com",
-          phone: "7024887608",
+          name: "",
+          email: "",
+          phone: "",
           preferredChannel: "both",
         });
       } else {
@@ -60,50 +61,62 @@ const AlertSubscription: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white shadow-lg rounded-2xl">
-      <h2 className="text-xl font-bold mb-4">Subscribe to Groundwater Alerts</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="max-w-lg mx-auto mt-12 rounded-3xl overflow-hidden shadow-2xl border border-sky-200 bg-white/95">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-4">
+        <h2 className="text-2xl font-bold text-white text-center drop-shadow">
+          🌊 Subscribe to Jalsthar Alerts
+        </h2>
+        <p className="text-sky-100 text-sm text-center">
+          Get groundwater updates via Email or SMS
+        </p>
+      </div>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="p-8 space-y-6">
         <div>
-          <label className="block text-sm font-medium">Name</label>
+          <label className="block text-sky-700 font-medium">Name</label>
           <input
             type="text"
             name="name"
             required
             value={formData.name}
             onChange={handleChange}
-            className="mt-1 w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
+            className="mt-2 w-full h-12 px-3 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Email</label>
+          <label className="block text-sky-700 font-medium">Email</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="mt-1 w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
+            className="mt-2 w-full h-12 px-3 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Phone</label>
+          <label className="block text-sky-700 font-medium">Phone</label>
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="mt-1 w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
+            className="mt-2 w-full h-12 px-3 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Preferred Channel</label>
+          <label className="block text-sky-700 font-medium">
+            Preferred Channel
+          </label>
           <select
             name="preferredChannel"
             value={formData.preferredChannel}
             onChange={handleChange}
-            className="mt-1 w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
+            className="mt-2 w-full h-12 px-3 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white"
           >
             <option value="both">Both</option>
             <option value="email">Email only</option>
@@ -114,14 +127,23 @@ const AlertSubscription: React.FC = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition"
+          className="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg text-lg font-semibold shadow-md hover:from-sky-600 hover:to-blue-700 transition-all"
         >
           {loading ? "Submitting..." : "Subscribe"}
         </button>
       </form>
 
-      {message && <p className="mt-4 text-green-600">{message}</p>}
-      {error && <p className="mt-4 text-red-600">{error}</p>}
+      {/* Status messages */}
+      {message && (
+        <p className="px-8 pb-6 text-green-600 font-medium text-center">
+          {message}
+        </p>
+      )}
+      {error && (
+        <p className="px-8 pb-6 text-red-600 font-medium text-center">
+          {error}
+        </p>
+      )}
     </div>
   );
 };
