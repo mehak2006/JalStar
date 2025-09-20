@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Header from "@/components/ui/header";
 // import Footer from "@/components/ui/footer";
+
 interface FormData {
   name: string;
   email: string;
@@ -63,64 +64,65 @@ const AlertSubscription: React.FC = () => {
   return (
     <>
       <Header/>
-      {/* Add container with top padding to account for fixed header */}
-      <div className="pt-20 min-h-screen py-8">
-        <div className="max-w-lg mx-auto mt-8 mb-8 rounded-3xl overflow-hidden shadow-2xl border border-sky-200 bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300/95 ">
-          
-          <div className="bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-4">
-            <h2 className="text-2xl font-bold text-white text-center drop-shadow">
-              Subscribe to JalSthar Alerts
-            </h2>
-            <p className="text-sky-100 text-lg text-center">
-              Get groundwater updates via Email or SMS
-            </p>
-          </div>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 p-6 pt-24">
+        <div className="w-full max-w-md rounded-2xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-0 shadow-xl p-8">
+          <h2 className="mb-2 text-center text-2xl font-semibold text-white">
+            Subscribe to JalSthar Alerts
+          </h2>
+          <p className="mb-6 text-center text-sm text-slate-600 dark:text-slate-300">
+            Get groundwater updates via Email or SMS
+          </p>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="p-8 space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sky-700 font-medium">Name</label>
+              <label className="block text-slate-600 dark:text-slate-300 font-medium mb-2">
+                Name
+              </label>
               <input
                 type="text"
                 name="name"
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="mt-2 w-full h-12 px-3 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
+                className="w-full bg-white dark:bg-slate-700/50 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500 rounded-md px-3 py-2"
               />
             </div>
 
             <div>
-              <label className="block text-sky-700 font-medium">Email</label>
+              <label className="block text-slate-600 dark:text-slate-300 font-medium mb-2">
+                Email
+              </label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-2 w-full h-12 px-3 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
+                className="w-full bg-white dark:bg-slate-700/50 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500 rounded-md px-3 py-2"
               />
             </div>
 
             <div>
-              <label className="block text-sky-700 font-medium">Phone</label>
+              <label className="block text-slate-600 dark:text-slate-300 font-medium mb-2">
+                Phone
+              </label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="mt-2 w-full h-12 px-3 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
+                className="w-full bg-white dark:bg-slate-700/50 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500 rounded-md px-3 py-2"
               />
             </div>
 
             <div>
-              <label className="block text-sky-700 font-medium">
+              <label className="block text-slate-600 dark:text-slate-300 font-medium mb-2">
                 Preferred Channel
               </label>
               <select
                 name="preferredChannel"
                 value={formData.preferredChannel}
                 onChange={handleChange}
-                className="mt-2 w-full h-12 px-3 border border-sky-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white"
+                className="w-full bg-white dark:bg-slate-700/50 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white focus:border-blue-500 focus:ring-blue-500 rounded-md px-3 py-2"
               >
                 <option value="both">Both</option>
                 <option value="email">Email only</option>
@@ -131,7 +133,7 @@ const AlertSubscription: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg text-lg font-semibold shadow-md hover:from-sky-600 hover:to-blue-700 transition-all"
+              className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg font-medium py-2.5 rounded-lg transition-colors duration-200 disabled:opacity-50"
             >
               {loading ? "Submitting..." : "Subscribe"}
             </button>
@@ -139,12 +141,12 @@ const AlertSubscription: React.FC = () => {
 
           {/* Status messages */}
           {message && (
-            <p className="px-8 pb-6 text-green-600 font-medium text-center">
+            <p className="mt-4 text-center text-sm text-emerald-400 font-medium">
               {message}
             </p>
           )}
           {error && (
-            <p className="px-8 pb-6 text-red-600 font-medium text-center">
+            <p className="mt-4 text-center text-sm text-red-400 font-medium">
               {error}
             </p>
           )}

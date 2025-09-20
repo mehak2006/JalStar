@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "./ui/header";
 import Footer from "./ui/footer";
+
 interface HomeProps {
   projectName: string;
   tagline: string;
@@ -57,9 +58,9 @@ function TypingTitle({ text }: { text: string }) {
   }, [i, text]);
 
   return (
-    <h1 className=" pt-20 text-4xl md:text-6xl font-extrabold text-center lg:text-left">
+    <h1 className="pt-20 text-4xl md:text-6xl font-extrabold text-center">
       <motion.span
-        className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(59,130,246,0.8)]"
+        className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(59,130,246,0.8)]"
         animate={{
           textShadow: [
             "0 0 10px #3b82f6",
@@ -71,7 +72,7 @@ function TypingTitle({ text }: { text: string }) {
       >
         {displayed}
       </motion.span>
-      <span className="animate-pulse text-blue-600">|</span>
+      <span className="animate-pulse text-blue-400">|</span>
     </h1>
   );
 }
@@ -93,47 +94,47 @@ const Home: React.FC<HomeProps> = ({
   }, [imageSrc]);
 
   return (
-    <main className="max-w-[100%] bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300 overflow-hidden dark:bg-gradient-to-b from-black-50 via-gray to-black-100">
+    <main className="max-w-[100%] bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 overflow-hidden">
       <Header />
 
       {/* HERO */}
       <section className="px-6 py-16 grid gap-12 items-center lg:grid-cols-2">
         {/* Text side */}
-        <div className="space-y-6">
+        <div className="space-y-6 text-center lg:text-center">
           <TypingTitle text={projectName} />
 
-          <p className="text-gray-700 text-2xl md:text-xl max-w-xl">
+          <p className="text-slate-300 text-2xl md:text-xl max-w-xl mx-auto lg:mx-auto">
             {tagline}
           </p>
 
-          <div className="flex flex-wrap gap-3 items-center">
-            <span className="inline-block bg-gradient-to-r from-indigo-100 to-blue-100 text-indigo-700 px-4 py-1.5 rounded-full text-sm font-medium shadow">
+          <div className="flex flex-wrap gap-3 items-center justify-center lg:justify-center">
+            <span className="inline-block bg-slate-800/80 backdrop-blur-sm text-blue-400 px-4 py-1.5 rounded-full text-sm font-medium shadow border border-slate-700">
               🚀 Innovation
             </span>
-            <span className="inline-block bg-gradient-to-r from-indigo-100 to-blue-100 text-indigo-700 px-4 py-1.5 rounded-full text-sm font-medium shadow">
+            <span className="inline-block bg-slate-800/80 backdrop-blur-sm text-blue-400 px-4 py-1.5 rounded-full text-sm font-medium shadow border border-slate-700">
               👥 Team: {Array.isArray(teamName) ? teamName.join(", ") : teamName}
             </span>
-            <span className="inline-block bg-gradient-to-r from-indigo-100 to-blue-100 text-indigo-700 px-4 py-1.5 rounded-full text-sm font-medium shadow">
+            <span className="inline-block bg-slate-800/80 backdrop-blur-sm text-blue-400 px-4 py-1.5 rounded-full text-sm font-medium shadow border border-slate-700">
               🌍 Real-world use
             </span>
           </div>
 
-          <p className="text-gray-700 text-xl max-w-prose">
+          <p className="text-slate-300 text-xl max-w-prose mx-auto lg:mx-auto text-center lg:text-center">
             JalSthar transforms raw DWLR telemetry into actionable insights.
             From farmers to researchers, anyone can track depletion, forecast
             water levels, and receive alerts that matter — empowering
             sustainable water management.
           </p>
 
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center justify-center lg:justify-center">
             <a
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow-lg hover:shadow-xl hover:scale-105 transition no-underline"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium shadow-lg hover:shadow-xl hover:scale-105 transition no-underline"
               href="#map"
             >
               🌐 View Map
             </a>
             <a
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-blue-600 border border-blue-600 font-medium shadow hover:bg-gray-50 transition no-underline"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-800/80 backdrop-blur-sm text-blue-400 border border-slate-600 font-medium shadow hover:bg-slate-700/80 transition no-underline"
               href="#docs"
             >
               📑 Project Docs
@@ -161,7 +162,7 @@ const Home: React.FC<HomeProps> = ({
 
       {/* CARDS */}
       <section className="relative z-10 px-6 mt-20">
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {cards.map((c, i) => (
             <motion.article
               key={i}
@@ -170,24 +171,38 @@ const Home: React.FC<HomeProps> = ({
               transition={{ duration: 0.6, delay: i * 0.2 }}
               whileHover={{
                 scale: 1.05,
-                boxShadow: "0px 15px 30px rgba(59,130,246,0.4)",
+                boxShadow: "0px 20px 40px rgba(59,130,246,0.3)",
               }}
-              className="relative bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-gray-200 shadow-md cursor-pointer overflow-hidden transition"
+              className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-lg rounded-3xl p-8 border border-slate-700/50 shadow-2xl cursor-pointer overflow-hidden transition group"
             >
-              {/* Hover glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-0 hover:opacity-10 transition duration-500 rounded-2xl" />
-              <h3 className="text-xl font-bold text-gray-900 relative z-10">
+              {/* Animated background gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-3xl" />
+              
+              {/* Glowing border effect */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 blur-sm transition-all duration-500" />
+              
+              {/* Icon area */}
+              <div className="relative z-10 mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
+                  <span className="text-xl font-bold text-white">
+                    {i === 0 ? '⚙️' : i === 1 ? '🎯' : i === 2 ? '🚨' : '🔬'}
+                  </span>
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-bold text-white relative z-10 mb-4 group-hover:text-blue-300 transition-colors duration-300">
                 {c.title}
               </h3>
-              <p className="text-sm text-gray-700 mt-3 relative z-10">
+              <p className="text-slate-300 mt-3 relative z-10 leading-relaxed group-hover:text-slate-200 transition-colors duration-300">
                 {c.desc}
               </p>
               {c.cta && (
                 <a
-                  className="mt-4 inline-block text-sm font-medium text-blue-600 hover:underline relative z-10"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-blue-400 hover:text-cyan-400 hover:underline relative z-10 transition-colors duration-300"
                   href={c.cta.href}
                 >
                   {c.cta.text}
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
                 </a>
               )}
             </motion.article>
@@ -200,7 +215,7 @@ const Home: React.FC<HomeProps> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="mt-20 py-6 bg-gradient-to-r from-blue-50 to-indigo-50 text-sm text-gray-600 flex flex-wrap gap-6 justify-center rounded-t-2xl"
+        className="mt-20 py-6 bg-slate-800/80 backdrop-blur-sm text-sm text-slate-300 flex flex-wrap gap-6 justify-center rounded-t-2xl border-t border-slate-700"
       >
         <div>📡 Stations: 5,260</div>
         <div>⏱ Latest update: 2025-09-19 14:00</div>
