@@ -37,7 +37,7 @@ export default function LoginPage() {
       <div className="w-full max-w-xl rounded-3xl bg-white/90 p-12 shadow-2xl border border-blue-200">
         {/* Title */}
         <h2 className="mb-3 text-center text-4xl font-bold text-sky-800 drop-shadow-sm">
-          Welcome Back 🌊
+          Welcome Back 
         </h2>
         <p className="mb-10 text-center text-lg text-sky-700">
           Please sign in to your account
