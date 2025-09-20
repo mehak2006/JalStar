@@ -15,13 +15,14 @@ import States from "./states/state";
 const queryClient = new QueryClient();
 import DistrictsMap from "./districts/district";
 import AlertSubscription from "./components/AlertSubscription";
+import LoginPage from "./components/ui/loginPage";
+import SignupPage from "./components/ui/signupPage";
 const App = () => (
   <>
   
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="system" storageKey="groundwater-theme">
       {/* <Header/> */}
-      <AlertSubscription/>
       <LanguageProvider>
         <TooltipProvider>
           <Toaster />
@@ -41,6 +42,9 @@ const App = () => (
         </TooltipProvider>
       </LanguageProvider>
     </ThemeProvider>
+    <LoginPage/>
+    <SignupPage/>
+      <AlertSubscription/>
   </QueryClientProvider>
   </>
 );
