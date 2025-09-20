@@ -162,7 +162,7 @@ const Home: React.FC<HomeProps> = ({
 
       {/* CARDS */}
       <section className="relative z-10 px-6 mt-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex flex-col gap-8 max-w-4xl mx-auto">
           {cards.map((c, i) => (
             <motion.article
               key={i}
@@ -170,10 +170,10 @@ const Home: React.FC<HomeProps> = ({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, delay: i * 0.2 }}
               whileHover={{
-                scale: 1.05,
+                scale: 1.02,
                 boxShadow: "0px 20px 40px rgba(59,130,246,0.3)",
               }}
-              className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-lg rounded-3xl p-8 border border-slate-700/50 shadow-2xl cursor-pointer overflow-hidden transition group"
+              className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-lg rounded-3xl p-8 border border-slate-700/50 shadow-2xl cursor-pointer overflow-hidden transition group w-full"
             >
               {/* Animated background gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-3xl" />
@@ -181,30 +181,36 @@ const Home: React.FC<HomeProps> = ({
               {/* Glowing border effect */}
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 blur-sm transition-all duration-500" />
               
-              {/* Icon area */}
-              <div className="relative z-10 mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
-                  <span className="text-xl font-bold text-white">
-                    {i === 0 ? '⚙️' : i === 1 ? '🎯' : i === 2 ? '🚨' : '🔬'}
-                  </span>
+              {/* Content in row layout */}
+              <div className="relative z-10 flex items-start gap-6">
+                {/* Icon area */}
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
+                    <span className="text-2xl font-bold text-white">
+                      {i === 0 ? '⚙️' : i === 1 ? '🎯' : i === 2 ? '🚨' : '🔬'}
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Text content */}
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-white relative z-10 mb-3 group-hover:text-blue-300 transition-colors duration-300">
+                    {c.title}
+                  </h3>
+                  <p className="text-slate-300 relative z-10 leading-relaxed group-hover:text-slate-200 transition-colors duration-300">
+                    {c.desc}
+                  </p>
+                  {c.cta && (
+                    <a
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-400 hover:text-cyan-400 hover:underline relative z-10 transition-colors duration-300"
+                      href={c.cta.href}
+                    >
+                      {c.cta.text}
+                      <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+                    </a>
+                  )}
                 </div>
               </div>
-              
-              <h3 className="text-2xl font-bold text-white relative z-10 mb-4 group-hover:text-blue-300 transition-colors duration-300">
-                {c.title}
-              </h3>
-              <p className="text-slate-300 mt-3 relative z-10 leading-relaxed group-hover:text-slate-200 transition-colors duration-300">
-                {c.desc}
-              </p>
-              {c.cta && (
-                <a
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-blue-400 hover:text-cyan-400 hover:underline relative z-10 transition-colors duration-300"
-                  href={c.cta.href}
-                >
-                  {c.cta.text}
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-                </a>
-              )}
             </motion.article>
           ))}
         </div>
