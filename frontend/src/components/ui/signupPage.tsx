@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -36,36 +35,38 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-500 via-pink-400 to-yellow-300 p-6 relative overflow-hidden">
-      {/* Animated floating blobs using Tailwind only */}
-      <div className="absolute -top-20 -left-20 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-bounce" />
-      <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" />
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300 p-6 relative overflow-hidden">
+      {/* Animated water-like blobs */}
+      <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-sky-400 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-bounce" />
 
       {/* Signup card */}
-      <div className="w-full max-w-md rounded-3xl bg-white/30 backdrop-blur-lg shadow-2xl p-8 border border-white/40 animate-fadeIn">
-        <h2 className="mb-2 text-center text-3xl font-bold text-slate-900">
-          🚀 Join the Adventure!
+      <div className="w-full max-w-lg rounded-3xl bg-white/40 backdrop-blur-lg shadow-2xl p-10 border border-white/50">
+        <h2 className="mb-3 text-center text-4xl font-extrabold text-blue-900 drop-shadow-sm">
+          🌊 Welcome to Jalsthar
         </h2>
-        <p className="mb-6 text-center text-sm text-slate-600">
-          Let’s create your account and get started 🎉
+        <p className="mb-8 text-center text-base text-blue-700">
+          Create your account and dive into the flow 💧
         </p>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>🌟 Full Name</FormLabel>
+                  <FormLabel className="text-blue-800 font-medium">
+                    🌟 Full Name
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="John Doe"
-                      className="rounded-xl border-2 focus:border-pink-500 transition"
+                      className="rounded-xl border-2 border-blue-200 focus:border-sky-500 focus:ring focus:ring-sky-200 transition bg-white/70"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-600" />
                 </FormItem>
               )}
             />
@@ -74,15 +75,17 @@ export default function SignupPage() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>📧 Email</FormLabel>
+                  <FormLabel className="text-blue-800 font-medium">
+                    📧 Email
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="you@example.com"
-                      className="rounded-xl border-2 focus:border-yellow-500 transition"
+                      className="rounded-xl border-2 border-blue-200 focus:border-sky-500 focus:ring focus:ring-sky-200 transition bg-white/70"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-600" />
                 </FormItem>
               )}
             />
@@ -91,33 +94,35 @@ export default function SignupPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>🔒 Password</FormLabel>
+                  <FormLabel className="text-blue-800 font-medium">
+                    🔒 Password
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="password"
                       placeholder="••••••••"
-                      className="rounded-xl border-2 focus:border-purple-500 transition"
+                      className="rounded-xl border-2 border-blue-200 focus:border-sky-500 focus:ring focus:ring-sky-200 transition bg-white/70"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-600" />
                 </FormItem>
               )}
             />
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 text-white font-semibold py-2 px-4 rounded-xl shadow-lg hover:scale-105 transition-transform"
+              className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl transition-transform"
             >
-              ✨ Sign Up
+              🌟 Sign Up
             </Button>
           </form>
         </Form>
 
-        <p className="mt-6 text-center text-sm text-slate-700">
+        <p className="mt-8 text-center text-sm text-blue-800">
           Already have an account?{" "}
           <a
             href="/login"
-            className="text-purple-600 font-semibold hover:underline"
+            className="text-sky-600 font-semibold hover:underline"
           >
             Log in here 💫
           </a>
@@ -126,3 +131,4 @@ export default function SignupPage() {
     </div>
   );
 }
+
