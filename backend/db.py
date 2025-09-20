@@ -6,6 +6,13 @@ from contextlib import contextmanager
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///data/app.db")
 
+# --- ensure directory exists for SQLite ---
+if DATABASE_URL.startswith("sqlite:///"):
+    db_path = DATABASE_URL.replace("sqlite:///", "")
+    db_dir = os.path.dirname(db_path)
+    if db_dir and not os.path.exists(db_dir):
+        os.makedirs(db_dir, exist_ok=True)
+
 # SQLite needs special args for multithreaded use (APScheduler + Flask)
 connect_args = {}
 if DATABASE_URL.startswith("sqlite"):
