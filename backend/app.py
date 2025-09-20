@@ -1,12 +1,16 @@
 print(">>> LOADING THIS APP.PY <<<")
-# python -m uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
+# run with: python -m uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
+from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException
-from backend.services.forecast import forecast_future
 from fastapi.middleware.cors import CORSMiddleware
-
+from backend.services.forecast import forecast_future
+from backend.services.db import get_station_data  # <-- new import
+from backend.services.email_service import send_alert_email
+from typing import Optional
 app = FastAPI()
 
-
+WATER_LEVEL_THRESHOLD = -9.0  # 9 meters below ground
+ALERT_EMAIL = "jyotikumarisingh881@gmail.com"  # To be replaced with actual email
 
 # Allow frontend origin
 app.add_middleware(
@@ -25,26 +29,47 @@ def read_root():
 def health():
     return {"status": "ok"}
 
-@app.get("/forecast")
-def get_forecast(n_future: int = 7):
+@app.get("/forecast/{station_id}")
+def get_forecast(station_id: str, n_future: int = 7):
     try:
-        return forecast_future(n_future=n_future)
+        return forecast_future(station_id=station_id, n_future=n_future)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/history")
-def get_history(days: int = 7):
-    import pandas as pd
-    
-    df = pd.read_csv("backend/data/clean_groundwater_daily.csv", parse_dates=["Date"])
-    df = df.dropna(subset=["Water_Level"])  # just in case
 
-    # keep only last `days`
-    df_recent = df.tail(days)
 
-    records = [
-        {"date": row.Date.strftime("%Y-%m-%d"), "water_level": float(row.Water_Level)}
-        for row in df_recent.itertuples()
+@app.get("/history/{station_id}")
+def get_history(station_id: str, days: int = 7):
+    from backend.services.db import get_station_data
+
+    # Instead of filtering by datetime, just fetch N docs
+    docs = get_station_data(station_id, limit=days)
+    if not docs:
+        return {"station_id": station_id, "history": []}
+
+    history = [
+        {"date": str(d["ts"].date()), "water_level": float(d.get("gw_level_smoothed", d["gw_level"]))}
+        for d in docs
     ]
+    return {"station_id": station_id, "count": len(history), "history": history}
 
-    return {"days": days, "history": records}
+@app.get("/stations")
+def get_stations():
+    from backend.services.db import db
+    stations = list(db.latest.find({}, {"_id": 0, "station_id": 1, "lat": 1, "lon": 1, "name": 1}))
+    return {"stations": stations}
+
+@app.get("/latest/{station_id}")
+def get_latest(station_id: str):
+    from backend.services.db import db
+    doc = db.latest.find_one({"station_id": station_id}, {"_id": 0})
+    if not doc:
+        return {"station_id": station_id, "currentLevel": None}
+    return {
+        "station_id": station_id,
+        "currentLevel": doc["last"]["gw_level_smoothed"] if "last" in doc else None,
+        "ts": doc.get("ts"),
+        "lat": doc.get("lat") or doc.get("meta", {}).get("lat"),
+        "lon": doc.get("lon") or doc.get("meta", {}).get("lon"),
+        "name": doc.get("name")
+    }

@@ -5,11 +5,12 @@ import {
 } from "recharts";
 
 export default function HistoryViewer() {
+  const [stationId, setStationId] = useState<string>("DWLR_001"); // default station
   const [days, setDays] = useState<number>(7);
   const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/history?days=${days}`)
+    fetch(`http://127.0.0.1:8000/history/${stationId}?days=${days}`)
       .then(res => res.json())
       .then(json => {
         const formatted = json.history.map((d: any) => ({
@@ -19,13 +20,27 @@ export default function HistoryViewer() {
         setData(formatted);
       })
       .catch(console.error);
-  }, [days]);
+  }, [stationId, days]);
 
   return (
     <div style={{ padding: "20px" }}>
       <h2 className="text-xl font-bold mb-4">Groundwater Levels (History)</h2>
 
-      {/* Dropdown selector */}
+      {/* Dropdown selector for station */}
+      <div className="mb-4">
+        <label className="mr-2 font-medium">Station:</label>
+        <select
+          value={stationId}
+          onChange={(e) => setStationId(e.target.value)}
+          className="border px-2 py-1 rounded"
+        >
+          <option value="DWLR_001">DWLR_001</option>
+          <option value="DWLR_002">DWLR_002</option>
+          <option value="DWLR_003">DWLR_003</option>
+        </select>
+      </div>
+
+      {/* Dropdown selector for days */}
       <div className="mb-4">
         <label className="mr-2 font-medium">Select period:</label>
         <select
@@ -55,8 +70,6 @@ export default function HistoryViewer() {
       ) : (
         <div>Loading history…</div>
       )}
-
-      
     </div>
   );
 }

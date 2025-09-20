@@ -12,27 +12,44 @@ import {
 } from "recharts";
 
 export default function ForecastViewer() {
+  const [stationId, setStationId] = useState<string>("DWLR_001");
   const [data, setData] = useState<any[]>([]);
   const [trend, setTrend] = useState<string>("");
   const [meanCategory, setMeanCategory] = useState<string>("");
 
   useEffect(() => {
-    getForecast(7).then((json) => {
+    getForecast(stationId, 7).then((json) => {
       const formatted = json.predictions.map((p: number, i: number) => ({
         day: `Day ${i + 1}`,
         prediction: p,
       }));
       setData(formatted);
       setTrend(json.trend);
-      setMeanCategory(json.mean_category); // now comes directly from backend
+      setMeanCategory(json.mean_category);
     });
-  }, []);
+  }, [stationId]);
 
   if (!data.length) return <div>Loading forecast…</div>;
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2 className="text-xl font-bold mb-2">7-Day Groundwater Forecast</h2>
+      <h2 className="text-xl font-bold mb-2">
+        7-Day Groundwater Forecast ({stationId})
+      </h2>
+
+      <div className="mb-4">
+        <label className="mr-2 font-medium">Station:</label>
+        <select
+          value={stationId}
+          onChange={(e) => setStationId(e.target.value)}
+          className="border px-2 py-1 rounded"
+        >
+          <option value="DWLR_001">DWLR_001</option>
+          <option value="DWLR_002">DWLR_002</option>
+          <option value="DWLR_003">DWLR_003</option>
+        </select>
+      </div>
+
       <p className="mb-2">
         Trend: <strong>{trend}</strong>
       </p>

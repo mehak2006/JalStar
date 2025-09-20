@@ -10,10 +10,10 @@ import NotFound from "./pages/NotFound";
 // import ForecastViewer from "./components/ForecastViewer";
 // import HistoryViewer from "./components/HistoryViewer";
 // import Header from "@/components/header";
-import Districts from "./districts/district";
+// import Districts from "./districts/district";
 import States from "./states/state";
 const queryClient = new QueryClient();
-
+import DistrictsMap from "./districts/district";
 const App = () => (
   <>
   
@@ -30,8 +30,9 @@ const App = () => (
              
                 {/* <Route path="/forecast" element={<ForecastViewer />} />
                 <Route path="/history" element={<HistoryViewer />} /> */}
-                <Route path="/district" element={<Districts />} />
+                {/* <Route path="/district" element={<Districts />} /> */}
                 <Route path="/state" element={<States />} />
+                <Route path="/district" element={<DistrictsMap/>}/>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
