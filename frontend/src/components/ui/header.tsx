@@ -17,6 +17,12 @@ const Header = () => {
         {/* Navigation */}
         <nav className="flex space-x-6 items-center font-medium">
           <Link
+            to="/"
+            className="no-underline hover:text-primary transition-colors"
+          >
+            Home
+          </Link>
+          <Link
             to="/GroundWaterDashboard"
             className="no-underline hover:text-primary transition-colors"
           >
