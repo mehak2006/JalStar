@@ -1,14 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
 
-// Add this declaration if not already present in your project
+// Add the following declaration to extend ImportMeta for Vite env variables
 interface ImportMetaEnv {
-  VITE_OPENAI_API_KEY: string;
+  readonly VITE_OPENAI_API_KEY: string;
+  // add other env variables here if needed
 }
 
 interface ImportMeta {
-  env: ImportMetaEnv;
+  readonly env: ImportMetaEnv;
 }
+
+
 
 export default function Chatbot() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([
@@ -23,6 +26,8 @@ export default function Chatbot() {
     const newMessages = [...messages, { role: "user", content: input }];
     setMessages(newMessages);
     setInput("");
+   
+
 
     try {
       const response = await axios.post(
@@ -37,6 +42,7 @@ export default function Chatbot() {
             "Content-Type": "application/json",
           },
         }
+        
       );
 
       const reply = response.data.choices[0].message.content;
