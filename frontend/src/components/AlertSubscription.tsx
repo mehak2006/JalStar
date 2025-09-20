@@ -63,9 +63,9 @@ const AlertSubscription: React.FC = () => {
 
   return (
     <>
-
-    <div className="max-w-lg mx-auto mt-12 rounded-3xl overflow-hidden shadow-2xl border border-sky-200 bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300/95">
-      <Header/>
+  <Header/>
+    <div className="max-w-lg mx-auto  rounded-3xl overflow-hidden shadow-2xl border border-sky-200 bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300/95 ">
+      
       <div className="bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-4">
         <h2 className="text-2xl font-bold text-white text-center drop-shadow">
           Subscribe to JalSthar Alerts

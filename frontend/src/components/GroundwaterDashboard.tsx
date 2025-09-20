@@ -213,7 +213,7 @@ export default function GroundwaterDashboard() {
   return (
     <>
     <Header/>
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300 to-muted/50 p-4 space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300 to-muted/50  p-4 space-y-6">
       {/* <NavBar/>  */}
       
       <div className="flex items-center justify-between">
