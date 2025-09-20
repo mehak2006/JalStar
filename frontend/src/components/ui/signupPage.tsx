@@ -13,13 +13,13 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-
+import Header from "@/components/ui/header";
 const signupSchema = z.object({
   name: z.string().min(2, "Name is too short"),
   email: z.string().email("Enter a valid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
-
+import Footer from "@/components/ui/footer";
 export default function SignupPage() {
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -35,6 +35,8 @@ export default function SignupPage() {
   }
 
   return (
+    <>
+    <Header/>
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-6">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
         <h2 className="mb-6 text-center text-2xl font-semibold text-slate-800">
@@ -94,5 +96,7 @@ export default function SignupPage() {
         </p>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }

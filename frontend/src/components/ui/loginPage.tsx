@@ -13,6 +13,9 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import {Link} from "react-router-dom";
+import Header from "@/components/ui/header";
+import Footer from "@/components/ui/footer";
 
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -33,6 +36,8 @@ export default function LoginPage() {
   }
 
   return (
+    <>
+    <Header/>
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-6">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
         <h2 className="mb-6 text-center text-2xl font-semibold text-slate-800">
@@ -73,11 +78,13 @@ export default function LoginPage() {
         </Form>
         <p className="mt-4 text-center text-sm text-muted-foreground">
           Don’t have an account?{" "}
-          <a href="/signup" className="text-blue-600 hover:underline">
+          <Link to="/signup" className="text-blue-600 hover:underline">
             Sign up
-          </a>
+          </Link>
         </p>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }

@@ -39,15 +39,15 @@ const App = () => (
                 <Route path="/GroundWaterDashboard" element={<GroundwaterDashboard />} />
                 <Route path="/state" element={<States />} />
                 <Route path="/district" element={<DistrictsMap/>}/>
+                <Route path="/signup" element={<SignupPage/>}></Route>
+                <Route path="/login" element={<LoginPage/>}></Route>
+                <Route path="/subscribe" element={<AlertSubscription/>}/>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
       </LanguageProvider>
     </ThemeProvider>
-    <LoginPage/>
-    <SignupPage/>
-      <AlertSubscription/>
   </QueryClientProvider>
   </>
 );
