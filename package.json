@@ -3,6 +3,7 @@
     "axios": "^1.12.2",
     "bootstrap": "^5.3.8",
     "d3": "^7.9.0",
+    "framer-motion": "^12.23.16",
     "leaflet": "^1.9.4",
     "react-helmet": "^6.1.0"
   },
