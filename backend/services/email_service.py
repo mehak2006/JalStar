@@ -15,7 +15,7 @@ SMTP_USER = os.getenv("SMTP_USER")
 SMTP_PASS = os.getenv("SMTP_PASS")
 
 
-def send_email(to: str, subject: str, plain_text: str, html: str = None):
+def send_alert_email(to: str, subject: str, plain_text: str, html: str = None):
     """
     Send an email to 'to' with given subject and plain_text (and optional html).
     Returns (success: bool, response: str)

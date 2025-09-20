@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from backend.db import init_db, get_session
 from backend.models.subscriber import Subscriber
 from backend.services import scheduler, notification
-from services import scheduler
+from backend.services import scheduler
 
 load_dotenv()
 
