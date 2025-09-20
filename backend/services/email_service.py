@@ -21,6 +21,13 @@ def send_alert_email(to: str, subject: str, plain_text: str, html: str = None):
     Returns (success: bool, response: str)
     """
     # ---- Try SendGrid first ----
+    
+    print("📧 send_alert_email called with:", to, subject)
+    if SENDGRID_API_KEY:
+        print("📧 Using SendGrid API")
+        ...
+    else:
+        print("⚠ No SendGrid key found, falling back")
     if SENDGRID_API_KEY:
         try:
             message = Mail(
