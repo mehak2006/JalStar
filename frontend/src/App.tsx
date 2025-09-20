@@ -14,6 +14,9 @@ import NotFound from "./pages/NotFound";
 import States from "./states/state";
 const queryClient = new QueryClient();
 import DistrictsMap from "./districts/district";
+import AlertSubscription from "./components/AlertSubscription";
+import LoginPage from "./components/ui/loginPage";
+import SignupPage from "./components/ui/signupPage";
 const App = () => (
   <>
   
@@ -39,6 +42,9 @@ const App = () => (
         </TooltipProvider>
       </LanguageProvider>
     </ThemeProvider>
+    <LoginPage/>
+    <SignupPage/>
+      <AlertSubscription/>
   </QueryClientProvider>
   </>
 );
