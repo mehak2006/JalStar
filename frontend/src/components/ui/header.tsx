@@ -2,28 +2,23 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { LanguageSelector } from "@/components/language-selector";
 import { ThemeToggle } from "@/components/theme-toggle";
-// import Districts from "@/districts/district"; 
+
 const Header = () => {
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   return (
-        <header className="bg-white dark:bg-black text-black dark:text-white  shadow-md fixed w-full z-10 transition-colors">
+    <header className="bg-background text-foreground shadow-md fixed w-full z-20 transition-colors duration-300">
       <div className="w-full flex justify-between items-center px-6 py-3">
         {/* Logo / Title */}
-        {/* <img src="/favicon.ico" alt="icon" /> */}
-        <h1 className="text-xl font-bold">JalSthar</h1>
+        <h1 className="text-2xl font-extrabold tracking-wide text-primary">
+          JalSthar
+        </h1>
 
         {/* Navigation */}
-        <nav className="flex space-x-6">
-          <Link 
-            to="/" 
-            className="no-underline text-black dark:text-white hover:text-blue-500 dark:hover:text-blue-400"
-          >
-            Home
-          </Link>
-          <Link 
-            to="/GroundWaterDashboard" 
-            className="no-underline text-black dark:text-white hover:text-blue-500 dark:hover:text-blue-400"
+        <nav className="flex space-x-6 items-center font-medium">
+          <Link
+            to="/GroundWaterDashboard"
+            className="no-underline hover:text-primary transition-colors"
           >
             Dashboard
           </Link>
@@ -32,21 +27,21 @@ const Header = () => {
           <div className="relative">
             <button
               onClick={() => setIsMapOpen(!isMapOpen)}
-              className="text-black dark:text-white hover:text-blue-500 dark:hover:text-blue-400"
+              className="flex items-center gap-1 hover:text-primary transition-colors"
             >
-              Map ▼
+              Map <span className="text-xs">▼</span>
             </button>
             {isMapOpen && (
-              <div className="absolute left-0 mt-2 w-40 bg-white text-black dark:bg-gray-800 dark:text-white rounded shadow-lg">
-                <Link 
-                  to="/state" 
-                  className="no-underline block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+              <div className="absolute left-0 mt-2 w-44 bg-popover text-popover-foreground rounded-xl shadow-lg overflow-hidden animate-fadeIn">
+                <Link
+                  to="/states"
+                  className="block px-4 py-2 hover:bg-accent hover:text-accent-foreground transition"
                 >
                   States
                 </Link>
-                <Link 
-                  to="/district" 
-                  className="no-underline block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+                <Link
+                  to="/Districts"
+                  className="block px-4 py-2 hover:bg-accent hover:text-accent-foreground transition"
                 >
                   Districts
                 </Link>
@@ -56,13 +51,12 @@ const Header = () => {
         </nav>
 
         {/* Right Side Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <LanguageSelector />
           <ThemeToggle />
         </div>
       </div>
     </header>
-
   );
 };
 

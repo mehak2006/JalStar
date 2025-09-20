@@ -7,7 +7,7 @@ import "../css/base.css";
 import "../css/cinder.css";
 import "../css/highlight.css";
 
-const DistrictsPage: React.FC = () => {
+const DistrictsMap: React.FC = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const infoRef = useRef<HTMLDivElement | null>(null);
 
@@ -78,4 +78,4 @@ const DistrictsPage: React.FC = () => {
   );
 };
 
-export default DistrictsPage;
+export default DistrictsMap;

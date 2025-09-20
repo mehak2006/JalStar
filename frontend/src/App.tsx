@@ -13,7 +13,7 @@ import NotFound from "./pages/NotFound";
 // import Districts from "./districts/district";
 import States from "./states/state";
 const queryClient = new QueryClient();
-import DistrictMap from "@/districts/district";
+import DistrictsMap from "./districts/district";
 const App = () => (
   <>
   
@@ -32,7 +32,7 @@ const App = () => (
                 <Route path="/history" element={<HistoryViewer />} /> */}
                 {/* <Route path="/district" element={<Districts />} /> */}
                 <Route path="/state" element={<States />} />
-                <Route path="/district" element={<DistrictMap/>}/>
+                <Route path="/district" element={<DistrictsMap/>}/>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

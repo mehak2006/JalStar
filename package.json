@@ -1,29 +1,5 @@
 {
   "dependencies": {
-<<<<<<< Updated upstream
-    "bootstrap": "^5.3.8"
-  },
-  "name": "groundwaterleveldetection-using-dwlr",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jyoti-kumari-singh20/GroundWaterLevelDetection-using-DWLR.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/jyoti-kumari-singh20/GroundWaterLevelDetection-using-DWLR/issues"
-  },
-  "homepage": "https://github.com/jyoti-kumari-singh20/GroundWaterLevelDetection-using-DWLR#readme"
-=======
     "bootstrap": "^5.3.8",
     "d3": "^7.9.0",
     "leaflet": "^1.9.4",
@@ -33,5 +9,4 @@
     "@types/d3": "^7.4.3",
     "@types/leaflet": "^1.9.20"
   }
->>>>>>> Stashed changes
 }
