@@ -172,7 +172,7 @@ const Home: React.FC<HomeProps> = ({
               transition={{ duration: 0.6, delay: i * 0.2 }}
               whileHover={{
                 scale: 1.02,
-                boxShadow: "0px 25px 50px rgba(59,130,246,0.15)",
+                boxShadow: "0 8px 25px -8px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(59,130,246,0.05)",
               }}
               className="relative bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-lg ring-1 ring-blue-200/50 border border-blue-100 cursor-pointer overflow-hidden transition-all duration-300 group w-full hover:shadow-xl"
             >
