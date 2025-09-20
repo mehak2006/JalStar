@@ -17,6 +17,8 @@ import DistrictsMap from "./districts/district";
 import AlertSubscription from "./components/AlertSubscription";
 import LoginPage from "./components/ui/loginPage";
 import SignupPage from "./components/ui/signupPage";
+import GroundwaterDashboard from "./components/GroundwaterDashboard";
+import HomePage from "./components/home";
 const App = () => (
   <>
   
@@ -33,7 +35,8 @@ const App = () => (
              
                 {/* <Route path="/forecast" element={<ForecastViewer />} />
                 <Route path="/history" element={<HistoryViewer />} /> */}
-                {/* <Route path="/district" element={<Districts />} /> */}
+                <Route path="/" element={<HomePage/>}/>
+                <Route path="/GroundWaterDashboard" element={<GroundwaterDashboard />} />
                 <Route path="/state" element={<States />} />
                 <Route path="/district" element={<DistrictsMap/>}/>
               <Route path="*" element={<NotFound />} />

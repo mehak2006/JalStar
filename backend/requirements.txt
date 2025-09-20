@@ -8,3 +8,4 @@ tensorflow>=2.10
 h5py
 pymongo
 dnspython
+framer-motion

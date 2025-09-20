@@ -1,8 +1,7 @@
-import GroundwaterDashboard from "@/components/GroundwaterDashboard";
 import React from "react";
-
+import HomePage from "@/components/home";
 const Index = () => {
-  return <GroundwaterDashboard />;
+  return <HomePage />;
 };
 
 export default Index;
