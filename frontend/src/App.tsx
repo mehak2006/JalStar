@@ -14,12 +14,14 @@ import NotFound from "./pages/NotFound";
 import States from "./states/state";
 const queryClient = new QueryClient();
 import DistrictsMap from "./districts/district";
+import AlertSubscription from "./components/AlertSubscription";
 const App = () => (
   <>
   
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="system" storageKey="groundwater-theme">
       {/* <Header/> */}
+      <AlertSubscription/>
       <LanguageProvider>
         <TooltipProvider>
           <Toaster />
