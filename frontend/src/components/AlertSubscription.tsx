@@ -1,7 +1,8 @@
 
 import React, { useState } from "react";
 import axios from "axios";
-
+import Header from "@/components/ui/header";
+import Footer from "@/components/ui/footer";
 interface FormData {
   name: string;
   email: string;
@@ -61,13 +62,15 @@ const AlertSubscription: React.FC = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-12 rounded-3xl overflow-hidden shadow-2xl border border-sky-200 bg-white/95">
-      {/* Header */}
+    <>
+
+    <div className="max-w-lg mx-auto mt-12 rounded-3xl overflow-hidden shadow-2xl border border-sky-200 bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300/95">
+      <Header/>
       <div className="bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-4">
         <h2 className="text-2xl font-bold text-white text-center drop-shadow">
-          🌊 Subscribe to Jalsthar Alerts
+          Subscribe to JalSthar Alerts
         </h2>
-        <p className="text-sky-100 text-sm text-center">
+        <p className="text-sky-100 text-lg text-center">
           Get groundwater updates via Email or SMS
         </p>
       </div>
@@ -145,6 +148,8 @@ const AlertSubscription: React.FC = () => {
         </p>
       )}
     </div>
+    <Footer/>
+    </>
   );
 };
 

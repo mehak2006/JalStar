@@ -15,7 +15,7 @@ const Header = () => {
         </h1>
 
         {/* Navigation */}
-        <nav className="flex space-x-6 items-center font-medium">
+        <nav className="flex space-x-6 items-center  font-medium text-xl">
           <Link
             to="/"
             className="no-underline hover:text-primary transition-colors"
@@ -60,6 +60,13 @@ const Header = () => {
         <div className="flex items-center gap-3">
           <LanguageSelector />
           <ThemeToggle />
+          {/* ✅ Login button */}
+          <Link
+            to="/login"
+            className="px-4 py-1.5 rounded-lg bg-primary text-white font-medium shadow hover:bg-primary/80 transition no-underline"
+          >
+            Signup/Login
+          </Link>
         </div>
       </div>
     </header>

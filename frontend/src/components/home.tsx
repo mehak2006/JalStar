@@ -93,7 +93,7 @@ const Home: React.FC<HomeProps> = ({
   }, [imageSrc]);
 
   return (
-    <main className="max-w-[100%] bg-gradient-to-b from-blue-50 via-white to-blue-100 overflow-hidden dark:bg-gradient-to-b from-black-50 via-gray to-black-100">
+    <main className="max-w-[100%] bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300 overflow-hidden dark:bg-gradient-to-b from-black-50 via-gray to-black-100">
       <Header />
 
       {/* HERO */}

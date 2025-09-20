@@ -10,7 +10,7 @@ import { useTheme } from "@/components/theme-provider"; // ✅ import theme cont
 import Header from "@/components/ui/header";
 import HistoryViewer from "@/components/HistoryViewer";
 import ForecastViewer from "@/components/ForecastViewer";
-
+import Footer from "@/components/ui/footer";
 // import { AIAssistant } from "@/components/ai-assistant/AIAssistant";
 
 const mockWaterLevelData = [
@@ -213,12 +213,12 @@ export default function GroundwaterDashboard() {
   return (
     <>
     <Header/>
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/50 p-4 space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-200 to-sky-300 to-muted/50 p-4 space-y-6">
       {/* <NavBar/>  */}
       
       <div className="flex items-center justify-between">
         <div className="text-center flex-1 space-y-2">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent py-17">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-black py-17 pt-25">
             {t('groundwater_monitoring')}
           </h1>
           <p className="text-muted-foreground">
@@ -436,6 +436,7 @@ export default function GroundwaterDashboard() {
       {/* AI Assistant */}
       {/* <AIAssistant /> */}
     </div>
+    <Footer/>
     </>
   );
 }
