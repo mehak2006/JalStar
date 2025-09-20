@@ -61,7 +61,7 @@ async function seedData(n = 50) {
 let lastDate = new Date(baseDate);
 lastDate.setDate(baseDate.getDate() + 1); // first realtime point = tomorrow (midnight)
 
-function startRealtime(intervalMs = 1000) {
+function startRealtime(intervalMs = 30000) {
   console.log(`📡 Starting realtime simulator for ${STATION_ID} (tick every ${intervalMs} ms)...`);
   setInterval(async () => {
     const d = new Date(lastDate); // clone
@@ -87,5 +87,5 @@ function startRealtime(intervalMs = 1000) {
 // Run: seed 50 days, then produce a new "day" every 1s (demo speed)
 (async () => {
   await seedData(50);
-  startRealtime(1000); // every second = next day
+  startRealtime(30000); // every second = next day
 })();
