@@ -16,6 +16,7 @@ import {
 import {Link} from "react-router-dom";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
+import { Mail, Lock, LogIn, Shield } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -38,64 +39,116 @@ export default function LoginPage() {
   return (
     <>
     <Header/>
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 p-6">
-      <div className="w-full max-w-md rounded-2xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-0 shadow-xl p-8">
-        <h2 className="mb-6 text-center text-2xl font-semibold text-white">
-          Welcome Back 
-        </h2>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-slate-600 dark:text-slate-300">Email</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="you@example.com" 
-                      className="bg-white dark:bg-slate-700/50 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-slate-600 dark:text-slate-300">Password</FormLabel>
-                  <FormControl>
-                    <Input 
-                      type="password" 
-                      placeholder="••••••••" 
-                      className="bg-white dark:bg-slate-700/50 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500"
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              )}
-            />
-            <Button 
-              type="submit" 
-              className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg font-medium py-2.5 rounded-lg transition-colors duration-200"
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-white to-cyan-50 p-6 pt-32">
+      <div className="w-full max-w-md">
+        {/* Main login card */}
+        <div className="rounded-3xl bg-white/95 backdrop-blur-sm shadow-2xl p-8 ring-1 ring-blue-200/50 border border-blue-100">
+          {/* Header section with icon */}
+          <div className="text-center mb-8">
+            <div className="mx-auto mb-4 w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
+              <Shield className="h-8 w-8 text-white" />
+            </div>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+              Welcome Back
+            </h2>
+            <p className="text-slate-600 mt-2 font-medium">
+              Sign in to your JalSthar account
+            </p>
+          </div>
+
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-slate-700 font-semibold">Email Address</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="you@example.com" 
+                        className="bg-white/90 border-blue-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400 shadow-sm rounded-xl py-3 ring-1 ring-blue-100/50 h-12" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-slate-700 font-semibold">Password</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="password" 
+                        placeholder="••••••••" 
+                        className="bg-white/90 border-blue-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400 shadow-sm rounded-xl py-3 ring-1 ring-blue-100/50 h-12"
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              
+              {/* Forgot password link */}
+              <div className="text-right">
+                <Link 
+                  to="/forgot-password" 
+                  className="text-sm text-blue-600 hover:text-cyan-600 font-medium hover:underline transition-colors duration-200"
+                >
+                  Forgot your password?
+                </Link>
+              </div>
+              
+              <Button 
+                type="submit" 
+                className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg font-semibold py-3 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-[1.02] text-lg"
+              >
+                <LogIn className="h-5 w-5 mr-2" />
+                Sign In
+              </Button>
+            </form>
+          </Form>
+
+          {/* Signup link */}
+          <div className="mt-6 text-center">
+            <p className="text-slate-600">
+              Don't have an account?
+            </p>
+            <Link 
+              to="/signup" 
+              className="inline-flex items-center gap-2 mt-2 text-blue-600 hover:text-cyan-600 font-semibold hover:underline transition-all duration-200 text-lg"
             >
-              Log In
-            </Button>
-          </form>
-        </Form>
-        <p className="mt-4 text-center text-sm text-slate-600 dark:text-slate-300">
-          Don't have an account?{" "}
-          <br/>
-          <Link to="/signup" className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline transition-colors duration-200">
-            Sign up
-          </Link>
-        </p>
-        {/* Add your form here */}
+              Create Account
+              <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Additional security info */}
+        <div className="mt-6 rounded-2xl bg-gradient-to-r from-blue-50 to-cyan-50 p-6 shadow-lg ring-1 ring-blue-200/50 border border-blue-100">
+          <div className="text-center">
+            <h3 className="text-lg font-bold text-slate-800 mb-2">Secure Access</h3>
+            <div className="grid grid-cols-3 gap-3 text-sm">
+              <div className="text-center">
+                <div className="text-2xl mb-1">🔒</div>
+                <p className="text-slate-600 font-medium">SSL Protected</p>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl mb-1">🛡️</div>
+                <p className="text-slate-600 font-medium">Data Encrypted</p>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl mb-1">✅</div>
+                <p className="text-slate-600 font-medium">Always Safe</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <Footer/>

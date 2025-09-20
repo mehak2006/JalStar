@@ -36,7 +36,7 @@ const DEFAULT_CARDS: HomeProps["cards"] = [
   },
 ];
 
-// ✅ TypingTitle
+// ✅ TypingTitle with blue gradient theme
 function TypingTitle({ text }: { text: string }) {
   const [displayed, setDisplayed] = useState("");
   const [i, setI] = useState(0);
@@ -60,19 +60,15 @@ function TypingTitle({ text }: { text: string }) {
   return (
     <h1 className="pt-20 text-4xl md:text-6xl font-extrabold text-center">
       <motion.span
-        className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(59,130,246,0.8)]"
+        className="bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent"
         animate={{
-          textShadow: [
-            "0 0 10px #3b82f6",
-            "0 0 25px #6366f1",
-            "0 0 10px #3b82f6",
-          ],
+          backgroundPosition: ["0%", "100%", "0%"],
         }}
-        transition={{ repeat: Infinity, duration: 2 }}
+        transition={{ repeat: Infinity, duration: 3 }}
       >
         {displayed}
       </motion.span>
-      <span className="animate-pulse text-blue-400">|</span>
+      <span className="animate-pulse text-blue-500">|</span>
     </h1>
   );
 }
@@ -94,47 +90,49 @@ const Home: React.FC<HomeProps> = ({
   }, [imageSrc]);
 
   return (
-    <main className="max-w-[100%] bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 overflow-hidden">
+    <main className="max-w-[100%] bg-gradient-to-br from-blue-50 via-white to-cyan-50 min-h-screen overflow-hidden">
       <Header />
 
-      {/* HERO */}
-      <section className="px-6 py-16 grid gap-12 items-center lg:grid-cols-2">
+      {/* HERO Section with dashboard theme */}
+      <section className="px-6 py-16 grid gap-12 items-center lg:grid-cols-2 pt-32">
         {/* Text side */}
         <div className="space-y-6 text-center lg:text-center">
           <TypingTitle text={projectName} />
 
-          <p className="text-slate-300 text-2xl md:text-xl max-w-xl mx-auto lg:mx-auto">
+          <p className="text-slate-700 text-2xl md:text-xl max-w-xl mx-auto lg:mx-auto font-medium">
             {tagline}
           </p>
 
           <div className="flex flex-wrap gap-3 items-center justify-center lg:justify-center">
-            <span className="inline-block bg-slate-800/80 backdrop-blur-sm text-blue-400 px-4 py-1.5 rounded-full text-sm font-medium shadow border border-slate-700">
+            <span className="inline-block bg-white/95 backdrop-blur-sm text-blue-600 px-4 py-2 rounded-full text-sm font-semibold shadow-lg border border-blue-100 ring-1 ring-blue-200/50">
               🚀 Innovation
             </span>
-            <span className="inline-block bg-slate-800/80 backdrop-blur-sm text-blue-400 px-4 py-1.5 rounded-full text-sm font-medium shadow border border-slate-700">
+            <span className="inline-block bg-white/95 backdrop-blur-sm text-blue-600 px-4 py-2 rounded-full text-sm font-semibold shadow-lg border border-blue-100 ring-1 ring-blue-200/50">
               👥 Team: {Array.isArray(teamName) ? teamName.join(", ") : teamName}
             </span>
-            <span className="inline-block bg-slate-800/80 backdrop-blur-sm text-blue-400 px-4 py-1.5 rounded-full text-sm font-medium shadow border border-slate-700">
+            <span className="inline-block bg-white/95 backdrop-blur-sm text-blue-600 px-4 py-2 rounded-full text-sm font-semibold shadow-lg border border-blue-100 ring-1 ring-blue-200/50">
               🌍 Real-world use
             </span>
           </div>
 
-          <p className="text-slate-300 text-xl max-w-prose mx-auto lg:mx-auto text-center lg:text-center">
-            JalSthar transforms raw DWLR telemetry into actionable insights.
-            From farmers to researchers, anyone can track depletion, forecast
-            water levels, and receive alerts that matter — empowering
-            sustainable water management.
-          </p>
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-lg ring-1 ring-blue-200/50 border border-blue-100">
+            <p className="text-slate-700 text-lg max-w-prose mx-auto lg:mx-auto text-center lg:text-center leading-relaxed">
+              JalSthar transforms raw DWLR telemetry into actionable insights.
+              From farmers to researchers, anyone can track depletion, forecast
+              water levels, and receive alerts that matter — empowering
+              sustainable water management.
+            </p>
+          </div>
 
           <div className="flex gap-4 items-center justify-center lg:justify-center">
             <a
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium shadow-lg hover:shadow-xl hover:scale-105 transition no-underline"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 no-underline"
               href="#map"
             >
               🌐 View Map
             </a>
             <a
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-800/80 backdrop-blur-sm text-blue-400 border border-slate-600 font-medium shadow hover:bg-slate-700/80 transition no-underline"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/95 backdrop-blur-sm text-blue-600 border border-blue-200 font-semibold shadow-lg hover:shadow-xl hover:scale-105 hover:bg-blue-50 transition-all duration-300 no-underline ring-1 ring-blue-200/50"
               href="#docs"
             >
               📑 Project Docs
@@ -142,8 +140,8 @@ const Home: React.FC<HomeProps> = ({
           </div>
         </div>
 
-        {/* Image side */}
-        <motion.div className="relative w-full h-80 md:h-[28rem] flex justify-center items-center rounded-3xl overflow-hidden shadow-2xl">
+        {/* Image side with dashboard styling */}
+        <motion.div className="relative w-full h-80 md:h-[28rem] flex justify-center items-center rounded-3xl overflow-hidden shadow-2xl ring-1 ring-blue-200/50 border border-blue-100">
           <AnimatePresence mode="wait">
             <motion.img
               key={index}
@@ -157,10 +155,13 @@ const Home: React.FC<HomeProps> = ({
               transition={{ duration: 0.8 }}
             />
           </AnimatePresence>
+          
+          {/* Overlay gradient for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent" />
         </motion.div>
       </section>
 
-      {/* CARDS */}
+      {/* CARDS Section with dashboard theme */}
       <section className="relative z-10 px-6 mt-20">
         <div className="flex flex-col gap-8 max-w-4xl mx-auto">
           {cards.map((c, i) => (
@@ -171,19 +172,16 @@ const Home: React.FC<HomeProps> = ({
               transition={{ duration: 0.6, delay: i * 0.2 }}
               whileHover={{
                 scale: 1.02,
-                boxShadow: "0px 20px 40px rgba(59,130,246,0.3)",
+                boxShadow: "0px 25px 50px rgba(59,130,246,0.15)",
               }}
-              className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-lg rounded-3xl p-8 border border-slate-700/50 shadow-2xl cursor-pointer overflow-hidden transition group w-full"
+              className="relative bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-lg ring-1 ring-blue-200/50 border border-blue-100 cursor-pointer overflow-hidden transition-all duration-300 group w-full hover:shadow-xl"
             >
-              {/* Animated background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-3xl" />
-              
-              {/* Glowing border effect */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 blur-sm transition-all duration-500" />
+              {/* Animated background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-cyan-50/50 to-teal-50/50 opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-3xl" />
               
               {/* Content in row layout */}
               <div className="relative z-10 flex items-start gap-6">
-                {/* Icon area */}
+                {/* Icon area with dashboard styling */}
                 <div className="flex-shrink-0">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
                     <span className="text-2xl font-bold text-white">
@@ -194,15 +192,15 @@ const Home: React.FC<HomeProps> = ({
                 
                 {/* Text content */}
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-white relative z-10 mb-3 group-hover:text-blue-300 transition-colors duration-300">
+                  <h3 className="text-2xl font-bold text-slate-900 relative z-10 mb-3 group-hover:text-blue-600 transition-colors duration-300">
                     {c.title}
                   </h3>
-                  <p className="text-slate-300 relative z-10 leading-relaxed group-hover:text-slate-200 transition-colors duration-300">
+                  <p className="text-slate-700 relative z-10 leading-relaxed group-hover:text-slate-800 transition-colors duration-300">
                     {c.desc}
                   </p>
                   {c.cta && (
                     <a
-                      className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-400 hover:text-cyan-400 hover:underline relative z-10 transition-colors duration-300"
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-500 hover:text-cyan-500 hover:underline relative z-10 transition-colors duration-300"
                       href={c.cta.href}
                     >
                       {c.cta.text}
@@ -216,16 +214,16 @@ const Home: React.FC<HomeProps> = ({
         </div>
       </section>
 
-      {/* FOOTER STATS */}
+      {/* FOOTER STATS with dashboard theme */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="mt-20 py-6 bg-slate-800/80 backdrop-blur-sm text-sm text-slate-300 flex flex-wrap gap-6 justify-center rounded-t-2xl border-t border-slate-700"
+        className="mt-20 py-6 bg-white/95 backdrop-blur-sm text-sm text-slate-700 flex flex-wrap gap-6 justify-center rounded-t-2xl shadow-lg ring-1 ring-blue-200/50 border-t border-blue-100"
       >
-        <div>📡 Stations: 5,260</div>
-        <div>⏱ Latest update: 2025-09-19 14:00</div>
-        <div>💧 Data Source: DWLR telemetry</div>
+        <div className="bg-blue-50 px-4 py-2 rounded-full font-semibold text-blue-700">📡 Stations: 5,260</div>
+        <div className="bg-cyan-50 px-4 py-2 rounded-full font-semibold text-cyan-700">⏱ Latest update: 2025-09-19 14:00</div>
+        <div className="bg-teal-50 px-4 py-2 rounded-full font-semibold text-teal-700">💧 Data Source: DWLR telemetry</div>
       </motion.div>
     </main>
   );

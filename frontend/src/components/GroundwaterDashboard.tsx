@@ -55,7 +55,7 @@ interface StatsCardProps {
 }
 
 const StatsCard = ({ icon: Icon, title, value, trend, status }: StatsCardProps) => (
-  <Card className="border-0 shadow-xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+  <Card className="border-0 shadow-lg bg-white/95 backdrop-blur-sm hover:shadow-xl transition-all duration-300 ring-1 ring-slate-200/50">
     <CardContent className="p-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
@@ -63,18 +63,18 @@ const StatsCard = ({ icon: Icon, title, value, trend, status }: StatsCardProps) 
             <Icon className="h-5 w-5 text-white" />
           </div>
           <div>
-            <p className="text-sm font-medium text-slate-600 dark:text-slate-300">{title}</p>
-            <p className="text-xl font-bold text-slate-900 dark:text-white">{value}</p>
+            <p className="text-sm font-medium text-slate-600">{title}</p>
+            <p className="text-xl font-bold text-slate-900">{value}</p>
           </div>
         </div>
         <div className="flex items-center space-x-2">
           {trend === 'up' ? (
-            <div className="p-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
-              <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            <div className="p-1 rounded-full bg-emerald-50 ring-1 ring-emerald-200">
+              <TrendingUp className="h-4 w-4 text-emerald-600" />
             </div>
           ) : (
-            <div className="p-1 rounded-full bg-red-100 dark:bg-red-900/30">
-              <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+            <div className="p-1 rounded-full bg-red-50 ring-1 ring-red-200">
+              <TrendingDown className="h-4 w-4 text-red-600" />
             </div>
           )}
           <Badge variant={status === 'critical' ? 'destructive' : status === 'low' ? 'secondary' : 'default'}>
@@ -97,14 +97,14 @@ interface StationCardProps {
 }
 
 const StationCard = ({ station }: StationCardProps) => (
-  <Card className="border-0 shadow-lg bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+  <Card className="border-0 shadow-md bg-white/95 backdrop-blur-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ring-1 ring-slate-200/50">
     <CardContent className="p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center space-x-2">
           <div className="p-1.5 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500">
             <MapPin className="h-3 w-3 text-white" />
           </div>
-          <span className="font-semibold text-sm text-slate-900 dark:text-white">{station.id}</span>
+          <span className="font-semibold text-sm text-slate-900">{station.id}</span>
         </div>
         <Badge 
           variant={
@@ -116,16 +116,16 @@ const StationCard = ({ station }: StationCardProps) => (
           {station.status}
         </Badge>
       </div>
-      <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">{station.location}</p>
+      <p className="text-sm text-slate-600 mb-3">{station.location}</p>
       <div className="flex items-center justify-between">
-        <span className="text-lg font-bold text-slate-900 dark:text-white">{station.level}m</span>
+        <span className="text-lg font-bold text-slate-900">{station.level}m</span>
         {station.trend === 'up' ? (
-          <div className="p-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
-            <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="p-1 rounded-full bg-emerald-50 ring-1 ring-emerald-200">
+            <TrendingUp className="h-4 w-4 text-emerald-600" />
           </div>
         ) : (
-          <div className="p-1 rounded-full bg-red-100 dark:bg-red-900/30">
-            <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+          <div className="p-1 rounded-full bg-red-50 ring-1 ring-red-200">
+            <TrendingDown className="h-4 w-4 text-red-600" />
           </div>
         )}
       </div>
@@ -153,9 +153,9 @@ export default function GroundwaterDashboard() {
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const { theme } = useTheme();
 
-  const chartStroke = theme === "dark" ? "#ffffff" : "#FFD700";
-  const chartFill   = theme === "dark" ? "rgba(255, 255, 255, 0.71)" : "rgba(253, 216, 6, 0.65)"; 
-  const tooltipText = theme === "dark" ? "#ffffff" : "#000000";
+  const chartStroke = theme === "dark" ? "#ffffff" : "#3b82f6";
+  const chartFill   = theme === "dark" ? "rgba(255, 255, 255, 0.71)" : "rgba(59, 130, 246, 0.1)"; 
+  const tooltipText = theme === "dark" ? "#ffffff" : "#1e293b";
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -215,7 +215,7 @@ export default function GroundwaterDashboard() {
   return (
     <>
     <Header/>
-    <div className="bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-gray-900">
+    <div className="bg-gradient-to-br from-blue-50 via-white to-cyan-50 min-h-screen">
       {/* Title Section - positioned to be visible below navbar */}
       <div className="pt-24 pb-8 px-4">
         <div className="flex items-center justify-between">
@@ -223,7 +223,7 @@ export default function GroundwaterDashboard() {
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent py-2">
               {t('groundwater_monitoring')}
             </h1>
-            <p className="text-slate-600 dark:text-slate-300 text-lg">
+            <p className="text-slate-700 text-lg font-medium">
               {t('realtime_data')}
             </p>
           </div>
@@ -233,16 +233,16 @@ export default function GroundwaterDashboard() {
       {/* Main Content */}
       <div className="min-h-screen p-4 space-y-6">
         {/* Live Location Section */}
-        <Card className="border-0 shadow-xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm">
+        <Card className="border-0 shadow-lg bg-white/95 backdrop-blur-sm ring-1 ring-slate-200/50">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+              <CardTitle className="text-xl font-bold flex items-center gap-3 text-slate-900">
                 <div className="p-2 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg">
                   <Navigation className="h-5 w-5 text-white" />
                 </div>
                 {t('live_location_data')}
               </CardTitle>
-              <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-3 py-1.5 rounded-full">
+              <div className="flex items-center gap-2 text-sm text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full ring-1 ring-slate-200">
                 <Clock className="h-4 w-4" />
                 Updated {locationData?.lastUpdated || "—"}
               </div>
@@ -258,7 +258,7 @@ export default function GroundwaterDashboard() {
                   <Satellite className="h-5 w-5 mr-2" />
                   {t('enable_location')}
                 </Button>
-                <p className="text-slate-600 dark:text-slate-300">
+                <p className="text-slate-600">
                   {t('allow_location')}
                 </p>
               </div>
@@ -266,13 +266,13 @@ export default function GroundwaterDashboard() {
             
             {locationPermission === 'denied' && (
               <div className="text-center py-8">
-                <p className="text-slate-600 dark:text-slate-300 mb-4">
+                <p className="text-slate-600 mb-4">
                   Location access denied. Showing general area data.
                 </p>
                 <Button 
                   variant="outline" 
                   onClick={requestLocation}
-                  className="border-2 border-blue-200 dark:border-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                  className="border-2 border-blue-300 text-blue-700 hover:bg-blue-50"
                 >
                   <Navigation className="h-4 w-4 mr-2" />
                   Try Again
@@ -282,33 +282,33 @@ export default function GroundwaterDashboard() {
 
             {locationPermission === 'granted' && locationData && (
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30 border border-blue-200 dark:border-blue-700">
+                <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-100 ring-1 ring-blue-200 shadow-sm">
                   <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 w-fit mx-auto mb-3 shadow-lg">
                     <Droplets className="h-6 w-6 text-white" />
                   </div>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white">{locationData?.currentLevel}m</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">Current Level</p>
+                  <p className="text-2xl font-bold text-slate-900">{locationData?.currentLevel}m</p>
+                  <p className="text-xs text-slate-600 font-medium">Current Level</p>
                 </div>
-                <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 border border-emerald-200 dark:border-emerald-700">
+                <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-100 ring-1 ring-emerald-200 shadow-sm">
                   <div className="p-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 w-fit mx-auto mb-3 shadow-lg">
                     <MapPin className="h-6 w-6 text-white" />
                   </div>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">{locationData?.nearestStation}</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">Nearest Station</p>
+                  <p className="text-sm font-bold text-slate-900">{locationData?.nearestStation}</p>
+                  <p className="text-xs text-slate-600 font-medium">Nearest Station</p>
                 </div>
-                <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-purple-100 to-indigo-100 dark:from-purple-900/30 dark:to-indigo-900/30 border border-purple-200 dark:border-purple-700">
+                <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-100 ring-1 ring-purple-200 shadow-sm">
                   <div className="p-3 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 w-fit mx-auto mb-3 shadow-lg">
                     <Navigation className="h-6 w-6 text-white" />
                   </div>
-                  <p className="text-xs font-bold text-slate-900 dark:text-white">{locationData?.coordinates}</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">Coordinates</p>
+                  <p className="text-xs font-bold text-slate-900">{locationData?.coordinates}</p>
+                  <p className="text-xs text-slate-600 font-medium">Coordinates</p>
                 </div>
-                <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 border border-orange-200 dark:border-orange-700">
+                <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-orange-50 to-red-100 ring-1 ring-orange-200 shadow-sm">
                   <div className="p-3 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 w-fit mx-auto mb-3 shadow-lg">
                     <TrendingUp className="h-6 w-6 text-white" />
                   </div>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">{locationData?.altitude}m</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">Altitude</p>
+                  <p className="text-sm font-bold text-slate-900">{locationData?.altitude}m</p>
+                  <p className="text-xs text-slate-600 font-medium">Altitude</p>
                 </div>
               </div>
             )}
@@ -317,9 +317,9 @@ export default function GroundwaterDashboard() {
 
         {/* Nearby Stations */}
         {(locationPermission === 'granted' || locationPermission === 'denied') && (
-          <Card className="border-0 shadow-xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/95 backdrop-blur-sm ring-1 ring-slate-200/50">
             <CardHeader>
-              <CardTitle className="text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+              <CardTitle className="text-xl font-bold flex items-center gap-3 text-slate-900">
                 <div className="p-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 shadow-lg">
                   <MapPin className="h-5 w-5 text-white" />
                 </div>
@@ -329,24 +329,24 @@ export default function GroundwaterDashboard() {
             <CardContent>
               <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
                 {mockNearbyStations.map((station) => (
-                  <div key={station.id} className="p-4 rounded-xl border border-slate-200 dark:border-slate-600 bg-white/90 dark:bg-slate-700/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+                  <div key={station.id} className="p-4 rounded-xl ring-1 ring-slate-200 bg-white/90 backdrop-blur-sm hover:shadow-md transition-all duration-300">
                     <div className="flex items-center justify-between mb-3">
                       <Badge variant={station.status === 'critical' ? 'destructive' : station.status === 'low' ? 'secondary' : 'default'}>
                         {station.status}
                       </Badge>
-                      <span className="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-600 px-2 py-1 rounded-full font-medium">{station.distance}km away</span>
+                      <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full font-medium ring-1 ring-slate-200">{station.distance}km away</span>
                     </div>
-                    <h4 className="font-bold text-sm mb-1 text-slate-900 dark:text-white">{station.id}</h4>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 mb-3">{station.location}</p>
+                    <h4 className="font-bold text-sm mb-1 text-slate-900">{station.id}</h4>
+                    <p className="text-xs text-slate-600 mb-3">{station.location}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xl font-bold text-slate-900 dark:text-white">{station.level}m</span>
+                      <span className="text-xl font-bold text-slate-900">{station.level}m</span>
                       {station.trend === 'up' ? (
-                        <div className="p-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
-                          <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                        <div className="p-1.5 rounded-full bg-emerald-50 ring-1 ring-emerald-200">
+                          <TrendingUp className="h-4 w-4 text-emerald-600" />
                         </div>
                       ) : (
-                        <div className="p-1.5 rounded-full bg-red-100 dark:bg-red-900/30">
-                          <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                        <div className="p-1.5 rounded-full bg-red-50 ring-1 ring-red-200">
+                          <TrendingDown className="h-4 w-4 text-red-600" />
                         </div>
                       )}
                     </div>
@@ -363,10 +363,9 @@ export default function GroundwaterDashboard() {
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
             <Input 
               placeholder={t('search_stations')}
-              className="pl-12 pr-4 py-3 border-0 shadow-xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-slate-900 dark:text-white placeholder-slate-400 text-lg"
+              className="pl-12 pr-4 py-3 border-0 shadow-lg bg-white/95 backdrop-blur-sm text-slate-900 placeholder-slate-500 text-lg ring-1 ring-slate-200/50"
             />
           </div>
-          
         </div>
 
         {/* Stats Overview */}
@@ -403,18 +402,18 @@ export default function GroundwaterDashboard() {
 
         {/* Charts */}
         <div className="grid lg:grid-cols-2 gap-6">
-          <Card className="border-0 shadow-xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/95 backdrop-blur-sm ring-1 ring-slate-200/50">
             <CardHeader>
-              <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Historical Data</CardTitle>
+              <CardTitle className="text-xl font-bold text-slate-900">Historical Data</CardTitle>
             </CardHeader>
             <CardContent>
               <HistoryViewer />
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/95 backdrop-blur-sm ring-1 ring-slate-200/50">
             <CardHeader>
-              <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Forecast Data</CardTitle>
+              <CardTitle className="text-xl font-bold text-slate-900">Forecast Data</CardTitle>
             </CardHeader>
             <CardContent>
               <ForecastViewer />
@@ -423,9 +422,9 @@ export default function GroundwaterDashboard() {
         </div>
 
         {/* Recent Stations */}
-        <Card className="border-0 shadow-xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm">
+        <Card className="border-0 shadow-lg bg-white/95 backdrop-blur-sm ring-1 ring-slate-200/50">
           <CardHeader>
-            <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Recent Station Updates</CardTitle>
+            <CardTitle className="text-xl font-bold text-slate-900">Recent Station Updates</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -438,14 +437,14 @@ export default function GroundwaterDashboard() {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 pt-4">
-          <Button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-xl py-3 text-lg font-semibold">
+          <Button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg py-3 text-lg font-semibold">
             <MapPin className="h-5 w-5 mr-2" />
             View Station Map
           </Button>
 
           <Button 
             variant="secondary"
-            className="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-700 text-slate-900 dark:text-white hover:from-slate-300 hover:to-slate-400 dark:hover:from-slate-500 dark:hover:to-slate-600 shadow-xl py-3 text-lg font-semibold"
+            className="flex-1 bg-gradient-to-r from-slate-100 to-slate-200 text-slate-800 hover:from-slate-200 hover:to-slate-300 shadow-lg py-3 text-lg font-semibold ring-1 ring-slate-300"
           >
             <TrendingUp className="h-5 w-5 mr-2" />
             Generate Report
