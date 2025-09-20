@@ -43,10 +43,10 @@ export default function SignupPage() {
       {/* Signup card */}
       <div className="w-full max-w-lg rounded-3xl bg-white/40 backdrop-blur-lg shadow-2xl p-10 border border-white/50">
         <h2 className="mb-3 text-center text-4xl font-extrabold text-blue-900 drop-shadow-sm">
-          🌊 Welcome to Jalsthar
+           Welcome to Jalsthar
         </h2>
         <p className="mb-8 text-center text-base text-blue-700">
-          Create your account and dive into the flow 💧
+          Create your account and dive into the flow 
         </p>
 
         <Form {...form}>
@@ -57,7 +57,7 @@ export default function SignupPage() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-blue-800 font-medium">
-                    🌟 Full Name
+                    Full Name
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -76,7 +76,7 @@ export default function SignupPage() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-blue-800 font-medium">
-                    📧 Email
+                    Email
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -95,7 +95,7 @@ export default function SignupPage() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-blue-800 font-medium">
-                    🔒 Password
+                     Password
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -113,7 +113,7 @@ export default function SignupPage() {
               type="submit"
               className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl transition-transform"
             >
-              🌟 Sign Up
+               Sign Up
             </Button>
           </form>
         </Form>
@@ -124,7 +124,7 @@ export default function SignupPage() {
             href="/login"
             className="text-sky-600 font-semibold hover:underline"
           >
-            Log in here 💫
+            Log in here 
           </a>
         </p>
       </div>
