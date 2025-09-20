@@ -3,11 +3,22 @@ print(">>> LOADING THIS APP.PY <<<")
 from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+<<<<<<< Updated upstream
 from backend.services.forecast import forecast_future
 from backend.services.db import get_station_data  # <-- new import
 
 app = FastAPI()
 
+=======
+from backend.services.email_service import send_alert_email
+from typing import Optional
+
+app = FastAPI()
+
+WATER_LEVEL_THRESHOLD = -9.0  # 9 meters below ground
+ALERT_EMAIL = "jyotikumarisingh881@gmail.com"  # To be replaced with actual email
+
+>>>>>>> Stashed changes
 # Allow frontend origin
 app.add_middleware(
     CORSMiddleware,

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+<<<<<<< Updated upstream
     "bootstrap": "^5.3.8"
   },
   "name": "groundwaterleveldetection-using-dwlr",
@@ -22,4 +23,15 @@
     "url": "https://github.com/jyoti-kumari-singh20/GroundWaterLevelDetection-using-DWLR/issues"
   },
   "homepage": "https://github.com/jyoti-kumari-singh20/GroundWaterLevelDetection-using-DWLR#readme"
+=======
+    "bootstrap": "^5.3.8",
+    "d3": "^7.9.0",
+    "leaflet": "^1.9.4",
+    "react-helmet": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/leaflet": "^1.9.20"
+  }
+>>>>>>> Stashed changes
 }

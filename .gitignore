@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
 frontend/mongodb_passwords.txt
 dwlr-proto/.env
 .env
+=======
+node_modules
+>>>>>>> Stashed changes
