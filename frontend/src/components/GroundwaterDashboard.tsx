@@ -123,10 +123,22 @@ const StationCard = ({ station }: StationCardProps) => (
     </CardContent>
   </Card>
 );
+function haversine(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const toRad = (x: number) => (x * Math.PI) / 180;
+  const R = 6371; // Earth radius in km
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
 
 export default function GroundwaterDashboard() {
   const { t } = useLanguage();
   const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
+  const [locationData, setLocationData] = useState<any>(null);
   const [locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'pending'>('pending');
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const { theme } = useTheme(); // ✅ detect current theme
@@ -145,21 +157,58 @@ export default function GroundwaterDashboard() {
   }, []);
 
   const requestLocation = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          });
-          setLocationPermission('granted');
-        },
-        () => {
-          setLocationPermission('denied');
-        }
-      );
-    }
-  };
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const userLat = position.coords.latitude;
+        const userLon = position.coords.longitude;
+
+        setUserLocation({ lat: userLat, lng: userLon });
+        setLocationPermission("granted");
+
+        // Fetch real stations from backend
+        const res = await fetch("http://127.0.0.1:8000/stations");
+        const { stations } = await res.json();
+
+        // Find nearest
+        let nearest = stations[0];
+        let minDist = Infinity;
+        stations.forEach((s: any) => {
+          const dist = haversine(userLat, userLon, s.lat, s.lon);
+          if (dist < minDist) {
+            minDist = dist;
+            nearest = s;
+          }
+        });
+
+        console.log("Nearest station:", nearest, "at", minDist.toFixed(2), "km");
+        const latestRes = await fetch(`http://127.0.0.1:8000/latest/${nearest.station_id}`);
+        const latestJson = await latestRes.json();
+        const roundedLevel = latestJson.currentLevel !== null && latestJson.currentLevel !== undefined
+        ? Number(latestJson.currentLevel).toFixed(2)
+        : "N/A";
+
+
+        setLocationData({
+          currentLevel: roundedLevel,
+          lastUpdated: latestJson.ts ? new Date(latestJson.ts).toLocaleString() : "just now",
+          // use lat/lon coming directly from backend response
+          coordinates: latestJson.lat && latestJson.lon
+          ? `${latestJson.lat.toFixed(4)}°N, ${latestJson.lon.toFixed(4)}°E`
+          : "N/A",
+          altitude: 14,
+          nearestStation: latestJson.name || latestJson.station_id,
+          distance: minDist.toFixed(1)
+        });
+
+      },
+      () => {
+        setLocationPermission("denied");
+      }
+    );
+  }
+};
+
 
   return (
     <>
@@ -179,6 +228,7 @@ export default function GroundwaterDashboard() {
       </div>
 
       {/* Live Location Section */}
+      
       <Card className="border-0 shadow-[0_4px_12px_-2px_hsl(210_85%_35%/0.1)] bg-gradient-to-r from-primary/5 to-secondary/5">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -188,7 +238,7 @@ export default function GroundwaterDashboard() {
             </CardTitle>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Clock className="h-4 w-4" />
-              Updated {mockLocationData.lastUpdated}
+              Updated {locationData?.lastUpdated || "—"}
             </div>
           </div>
         </CardHeader>
@@ -217,26 +267,26 @@ export default function GroundwaterDashboard() {
             </div>
           )}
 
-          {(locationPermission === 'granted' || locationPermission === 'denied') && (
+          {locationPermission === 'granted' && locationData && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center p-3 rounded-lg bg-card/50">
                 <Droplets className="h-6 w-6 text-primary mx-auto mb-2" />
-                <p className="text-2xl font-bold">{mockLocationData.currentLevel}m</p>
+                <p className="text-2xl font-bold">{locationData?.currentLevel}m</p>
                 <p className="text-xs text-muted-foreground">Current Level</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-card/50">
                 <MapPin className="h-6 w-6 text-secondary mx-auto mb-2" />
-                <p className="text-sm font-semibold">{mockLocationData.nearestStation}</p>
+                <p className="text-sm font-semibold">{locationData?.nearestStation}</p>
                 <p className="text-xs text-muted-foreground">Nearest Station</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-card/50">
                 <Navigation className="h-6 w-6 text-accent mx-auto mb-2" />
-                <p className="text-xs font-medium">{mockLocationData.coordinates}</p>
+                <p className="text-xs font-medium">{locationData?.coordinates}</p>
                 <p className="text-xs text-muted-foreground">Coordinates</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-card/50">
                 <TrendingUp className="h-6 w-6 text-success mx-auto mb-2" />
-                <p className="text-sm font-semibold">{mockLocationData.altitude}m</p>
+                <p className="text-sm font-semibold">{locationData?.altitude}m</p>
                 <p className="text-xs text-muted-foreground">Altitude</p>
               </div>
             </div>

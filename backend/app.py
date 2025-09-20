@@ -168,3 +168,24 @@ def get_history(station_id: str, days: int = 7):
         for d in docs
     ]
     return {"station_id": station_id, "count": len(history), "history": history}
+
+@app.get("/stations")
+def get_stations():
+    from backend.services.db import db
+    stations = list(db.latest.find({}, {"_id": 0, "station_id": 1, "lat": 1, "lon": 1, "name": 1}))
+    return {"stations": stations}
+
+@app.get("/latest/{station_id}")
+def get_latest(station_id: str):
+    from backend.services.db import db
+    doc = db.latest.find_one({"station_id": station_id}, {"_id": 0})
+    if not doc:
+        return {"station_id": station_id, "currentLevel": None}
+    return {
+        "station_id": station_id,
+        "currentLevel": doc["last"]["gw_level_smoothed"] if "last" in doc else None,
+        "ts": doc.get("ts"),
+        "lat": doc.get("lat") or doc.get("meta", {}).get("lat"),
+        "lon": doc.get("lon") or doc.get("meta", {}).get("lon"),
+        "name": doc.get("name")
+    }

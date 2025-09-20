@@ -113,12 +113,14 @@ let changeStream;
             $set: {
               station_id,
               name,
+              lat,          //  store latitude
+              lon,          //  store longitude
               last: { gw_level, gw_level_smoothed: smoothed },
               ts: now
             }
           },
           { upsert: true }
-        );
+      );
 
         return res.json({ success: true });
       } catch (err) {
