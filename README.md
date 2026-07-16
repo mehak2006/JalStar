@@ -8,6 +8,16 @@ The project combines data ingestion, centralized storage, ML forecasting, and a 
 
 🎥 [Watch the JalStar demo video](./demo.mp4)
 
+## Screenshots
+
+<img src="https://github.com/user-attachments/assets/3d1e8466-142a-4073-9310-6772bbe85d74" alt="JalStar subscribe page screenshot" />
+
+<img src="https://github.com/user-attachments/assets/65f6c76f-9473-42c7-be12-d558d3f061f5" alt="JalStar application screenshot 2" />
+
+<img src="https://github.com/user-attachments/assets/921f5618-0354-4ba5-935b-5c4e0c32b54c" alt="JalStar application screenshot 3" />
+
+<img src="https://github.com/user-attachments/assets/a5878363-3957-4642-96c8-b79dd09489aa" alt="JalStar application screenshot 4" />
+
 ## Smart India Hackathon Context
 
 - SIH 2025 project: **JalStar: Groundwater Level Forecasting**
