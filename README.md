@@ -4,6 +4,10 @@ JalStar is a Smart India Hackathon project focused on **real-time groundwater mo
 
 The project combines data ingestion, centralized storage, ML forecasting, and a web dashboard to support data-driven water management.
 
+## Demo Video
+
+🎥 [Watch the JalStar demo video](#)
+
 ## Smart India Hackathon Context
 
 - SIH 2025 project: **JalStar: Groundwater Level Forecasting**
@@ -102,4 +106,3 @@ npm start
 ## Status
 
 This repository contains active hackathon-era code and prototypes. Some modules are exploratory, but the full pipeline (ingestion → storage → forecasting → UI) is represented in this codebase.
-
