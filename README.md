@@ -6,7 +6,7 @@ The project combines data ingestion, centralized storage, ML forecasting, and a 
 
 ## Demo Video
 
-🎥 [Watch the JalStar demo video](#./jalstar demo.mp4)
+🎥 [Watch the JalStar demo video](./jalstar demo.mp4)
 
 ## Smart India Hackathon Context
 
