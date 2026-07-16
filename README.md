@@ -1,4 +1,14 @@
+## My Contributions
+- **Team Role:** Collaborated with a team of 4 during the Smart India Hackathon (2025) to develop a groundwater monitoring and forecasting platform.
+- **Specific Impact:**
+    - Assisted in the integration of the React frontend with the backend API to visualize groundwater station data.
+    - Contributed to the development of the frontend dashboard, focusing on displaying historical trends and station-level records.
+    - Worked with the team to manage data ingestion flows and helped troubleshoot integration issues between the data pipeline and the UI.
+    - Gained hands-on experience in full-stack architecture by supporting the team in deploying the end-to-end prototype.
+
+
 # JalStar — Groundwater Level Forecasting (Smart India Hackathon 2025)
+
 
 JalStar is a Smart India Hackathon project focused on **real-time groundwater monitoring, forecasting, and alerts** using DWLR (Digital Water Level Recorder) style data pipelines.
 
